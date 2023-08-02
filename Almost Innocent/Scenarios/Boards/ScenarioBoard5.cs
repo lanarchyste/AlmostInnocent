@@ -27,6 +27,9 @@ namespace Almost_Innocent.Scenarios.Boards
 					/* 5 */{ RONGEUR_RUSE,          EMPTY,              MAGE_SENSIBLE,      AGRESSION,          PIRATE_PATATE,      INCENDIE },
                     /* 6 */{ RONGEUR_RUSE,          CHANTAGE,           PHARE,              MAGICIEN_MEFIANT,   MALEDICTION,        TOME }
                 };
+
+        public override List<string> Questions
+            => CommonQuestions.Concat(BuildQuestionsRelatedToScenario()).ToList();
     }
 }
 

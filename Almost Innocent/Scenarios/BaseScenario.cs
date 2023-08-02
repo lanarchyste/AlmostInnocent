@@ -56,6 +56,12 @@ namespace Almost_Innocent.Scenarios
 
         public void TurnIA(List<string> questionsAvailable)
         {
+            if(!questionsAvailable.Any())
+            {
+                Console.Write("L'IA est dans l'incapacité de poser une question");
+                return;
+            }
+
             var random = new Random();
 
             int attempt = 0;
@@ -167,15 +173,15 @@ namespace Almost_Innocent.Scenarios
             {
                 Console.WriteLine("---- JOUEUR ----");
                 Console.Write("Qu'elle est votre question ? ");
-                var question = ReadQuestion(); //TODO: Pouvoir passer si on connais la solution
-                ColorConsole.WriteEmbeddedColor($"Réponse : {Question(question)} [Appuyez sur Entrée]");
+                var question = ReadQuestion();
+                ColorConsole.WriteEmbeddedColor($"Votre indice : {Question(question)} [Appuyez sur Entrée]");
                 Console.Read();
                 Console.WriteLine();
 
                 if (TotalSurveyTokens > 0 && IsIAEnabled)
                 {
                     Console.WriteLine("---- IA ----");
-                    TurnIA(AllQuestions);
+                    TurnIA(ScenarioBoard.Questions);
 
                     Console.WriteLine();
                 }
@@ -249,8 +255,6 @@ namespace Almost_Innocent.Scenarios
             else
                 return false;
         }
-
-        protected abstract List<string> AllQuestions { get; }
 
         protected abstract string Question(string question);
 

@@ -3,7 +3,7 @@ using Almost_Innocent.Scenarios.Exceptions;
 
 namespace Almost_Innocent.Scenarios.Boards
 {
-    public class BaseBoard
+    public abstract class BaseBoard
 	{
         private readonly List<string> _locationUnavailable = new();
 
@@ -13,6 +13,9 @@ namespace Almost_Innocent.Scenarios.Boards
 		}
 
 		protected BaseCard[,] Board { get; }
+
+        public List<string> CommonQuestions
+            => new() { "#1", "#2", "#3", "#4", "#5", "#6", "#A", "#B", "#C",  "#D", "#E", "#F" };
 
         public bool CheckIsLocationAvailable(string question)
         => question switch
@@ -188,22 +191,63 @@ namespace Almost_Innocent.Scenarios.Boards
                 _ => "-",
             };
 
-        public List<string> AllQuestions
-            => new()
+        public abstract List<string> Questions { get; }
+
+        protected List<string> BuildQuestionsRelatedToScenario()
+        {
+            var questions = new List<string>();
+
+            for (var row = 0; row < Board.GetLength(0); row++)
+            {
+                for (var column = 0; column < Board.GetLength(1); column++)
                 {
-                    "#1", "V1", "P1", "L1", "CR1", "CO1",
-                    "#2", "V2", "P2", "L2", "CR2", "CO2",
-                    "#3", "V3", "P3", "L3", "CR3", "CO3",
-                    "#4", "V4", "P4", "L4", "CR4", "CO4",
-                    "#5", "V5", "P5", "L5", "CR5", "CO5",
-                    "#6", "V6", "P6", "L6", "CR6", "CO6",
-                    "#A", "VA", "PA", "LA", "CRA", "COA",
-                    "#B", "VB", "PB", "LB", "CRB", "COB",
-                    "#C", "VC", "PC", "LC", "CRC", "COC",
-                    "#D", "VD", "PD", "LD", "CRD", "COD",
-                    "#E", "VE", "PE", "LE", "CRE", "COE",
-                    "#F", "VF", "PF", "LF", "CRF", "COF",
-                };
+                    var card = Board[row, column];
+
+                    questions.Add(BuildQuestionByRow(card, row + 1));
+                    questions.Add(BuildQuestionByColumn(card, column + 1));
+                }
+            }
+
+            return questions.Where(x => !string.IsNullOrEmpty(x)).Distinct().ToList();
+        }
+
+        private string BuildQuestionByRow(BaseCard card, int row)
+            => card switch
+            {
+                CrimeCard => $"CR{row}",
+                EvidenceCard => $"P{row}",
+                GuiltyCard => $"CO{row}",
+                PlaceCard => $"L{row}",
+                VictimCard => $"V{row}",
+                _ => string.Empty,
+            };
+
+        private string BuildQuestionByColumn(BaseCard card, int column)
+        {
+            var position = column switch
+            {
+                1 => "A",
+                2 => "B",
+                3 => "C",
+                4 => "D",
+                5 => "E",
+                6 => "F",
+                _ => string.Empty,
+            };
+
+            if (string.IsNullOrEmpty(position))
+                return string.Empty;
+
+            return card switch
+            {
+                CrimeCard => $"CR{position}",
+                EvidenceCard => $"P{position}",
+                GuiltyCard => $"CO{position}",
+                PlaceCard => $"L{position}",
+                VictimCard => $"V{position}",
+                _ => string.Empty,
+            };
+        }
 
         private string GetNumberByRow(List<BaseCard> cards, int rowNumber)
         {

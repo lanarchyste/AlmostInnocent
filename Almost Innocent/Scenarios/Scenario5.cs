@@ -51,9 +51,6 @@ namespace Almost_Innocent.Scenarios
             return Create(difficultyLevel, isIAEnabled);
         }
 
-        protected override List<string> AllQuestions
-            => ScenarioBoard.AllQuestions;
-
         protected override string Question(string question)
             => ScenarioBoard.Question(question, new() { CrimeCard, VictimCard, EvidenceCard, PlaceCard, GuiltyCard });
 
@@ -67,7 +64,6 @@ namespace Almost_Innocent.Scenarios
                 ReadCombination(PlaceCard.All.Cast<BaseCard>().ToList(), PlaceCard, "Qu'elle est le [Yellow]lieu[/Yellow] ? ");
                 ReadCombination(GuiltyCard.All.Cast<BaseCard>().ToList(), GuiltyCard, "Qu'elle est le [Yellow]coupable[/Yellow] ? ");
 
-                //TODO: Définir une échelle de réussite entre le nombre de jetons d'indice / quasi-innocent
                 Console.Write("FELICITATIONS ! Vous avez gagné");
             }
             catch (LostGameException)

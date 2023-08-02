@@ -26,6 +26,9 @@ namespace Almost_Innocent.Scenarios.Boards
 					/* 5 */{ AGRESSION,		EMPTY,              VEUVE_ASTUCIEUSE,   LAPIN_VIGILANT,	EMPTY,      GARDE_BATRACIEN },
 					/* 6 */{ PHARE,			TOME,               EMPTY,              EMPTY,          CHANTAGE,   MOULIN }
                 };
+
+        public override List<string> Questions
+            => CommonQuestions.Concat(BuildQuestionsRelatedToScenario()).ToList();
     }
 }
 

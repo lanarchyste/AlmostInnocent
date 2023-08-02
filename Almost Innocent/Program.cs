@@ -1,8 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-//TODO: Poser en priorité une qestion de type dans une colonne/ligne ou le type existe !
-//TODO: Lors de la réponse ne pas répéter ce qu'on dis
-
 using Almost_Innocent.Scenarios;
 using System.Text.RegularExpressions;
 
