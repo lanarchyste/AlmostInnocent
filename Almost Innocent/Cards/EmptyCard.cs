@@ -3,7 +3,7 @@
     public class EmptyCard: BaseCard
 	{
 		public EmptyCard()
-			:base(string.Empty, false)
+			: base(string.Empty, string.Empty, false)
 		{
 		}
 

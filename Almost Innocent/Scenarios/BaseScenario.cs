@@ -3,6 +3,7 @@ using Almost_Innocent.Scenarios.Boards;
 using Almost_Innocent.Scenarios.Exceptions;
 using Almost_Innocent.Toolkit;
 using Diacritics.Extensions;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Almost_Innocent.Scenarios
@@ -202,7 +203,7 @@ namespace Almost_Innocent.Scenarios
                 return;
             }
 
-            card = card.RemoveDiacritics().ToLowerInvariant();
+            card = card.Trim().RemoveDiacritics().ToLowerInvariant();
 
             var count = cards.Where(c => c.ConvertNameToSearch().Equals(card, StringComparison.InvariantCultureIgnoreCase)).Count();
             if (count != 1)
@@ -259,6 +260,28 @@ namespace Almost_Innocent.Scenarios
         protected abstract string Question(string question);
 
         protected abstract void SolvingCombinations();
+
+        protected static string BuildHistory(List<BaseCard> cards)
+        {
+            var sb = new StringBuilder();
+
+            if (cards.FirstOrDefault(c => c is GuiltyCard) is GuiltyCard guilty)
+                sb.Append($" {guilty.Text} ");
+
+            if (cards.FirstOrDefault(c => c is CrimeCard) is CrimeCard crime)
+                sb.Append($" {crime.Text} ");
+
+            if (cards.FirstOrDefault(c => c is VictimCard) is VictimCard victim)
+                sb.Append($" {victim.Text} ");
+
+            if (cards.FirstOrDefault(c => c is PlaceCard) is PlaceCard place)
+                sb.Append($" {place.Text} ");
+
+            if (cards.FirstOrDefault(c => c is EvidenceCard) is EvidenceCard evidence)
+                sb.Append($" {evidence.Text} ");
+
+            return Regex.Replace(sb.ToString(), @"\s+", " ", RegexOptions.Singleline).Trim();
+        }
 
         private bool IsQuestionValid(string question)
             => _regexQuestion.IsMatch(question);

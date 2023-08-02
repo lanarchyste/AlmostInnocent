@@ -1,24 +1,24 @@
 ﻿namespace Almost_Innocent.Cards
 {
-    //Carte crime
+    //Carte crime (jaune)
     public class CrimeCard : BaseCard
 	{
-		public CrimeCard(string name, bool isAdditionalClue = false)
-            : base(name, isAdditionalClue)
+		public CrimeCard(string name, string text, bool isAdditionalClue = false)
+            : base(name, text, isAdditionalClue)
         {
 		}
 
-        public static CrimeCard INCENDIE => new("INCENDIE");
+        public static CrimeCard INCENDIE => new("INCENDIE", "a un peu trop mis le feu à");
 
-        public static CrimeCard MALEDICTION => new("MALEDICTION");
+        public static CrimeCard MALEDICTION => new("MALEDICTION", "a béni négativement");
 
-        public static CrimeCard POT_DE_VIN => new("POT_DE_VIN");
+        public static CrimeCard POT_DE_VIN => new("POT_DE_VIN", "a tenté financièrement");
 
-        public static CrimeCard CHANTAGE => new("CHANTAGE");
+        public static CrimeCard CHANTAGE => new("CHANTAGE", "a évoqué certains différents avec");
 
-        public static CrimeCard AGRESSION => new("AGRESSION");
+        public static CrimeCard AGRESSION => new("AGRESSION", "a libéré de ses possessions");
 
-        public static CrimeCard ESCROQUERIE => new("ESCROQUERIE");
+        public static CrimeCard ESCROQUERIE => new("ESCROQUERIE", "a induit en erreur");
 
         public static CrimeCard Random()
         {

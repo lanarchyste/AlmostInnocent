@@ -55,16 +55,17 @@ namespace Almost_Innocent.Scenarios
         {
             try
             {
-                ReadCombination(VictimCard.All.Cast<BaseCard>().ToList(), VictimCard, "Qu'elle est la [Yellow]victime[/Yellow] ? ");
                 ReadCombination(CrimeCard.All.Cast<BaseCard>().ToList(), CrimeCard, "Qu'elle est le [Yellow]crime[/Yellow] ? ");
-                ReadCombination(EvidenceCard.All.Cast<BaseCard>().ToList(), EvidenceCard, "Qu'elle est la [Yellow]preuve[/Yellow] ? ");
-                ReadCombination(PlaceCard.All.Cast<BaseCard>().ToList(), PlaceCard, "Qu'elle est le [Yellow]lieu[/Yellow] ? ");
+                ReadCombination(VictimCard.All.Cast<BaseCard>().ToList(), VictimCard, "Qu'elle est la [Blue]victime[/Blue] ? ");
+                ReadCombination(PlaceCard.All.Cast<BaseCard>().ToList(), PlaceCard, "Qu'elle est le [DarkYellow]lieu[/DarkYellow] ? ");
+                ReadCombination(EvidenceCard.All.Cast<BaseCard>().ToList(), EvidenceCard, "Qu'elle est la [Green]preuve[/Green] ? ");
 
-                Console.Write("FELICITATIONS ! Vous avez gagné");
+                Console.WriteLine("Félicitations, vous avez gagné !");
+                ColorConsole.Write($"Votre enquête réussie, vous concluez que le coupable {BuildHistory(new() { CrimeCard, VictimCard, EvidenceCard, PlaceCard })}", ConsoleColor.Yellow);
             }
             catch(LostGameException)
             {
-                ColorConsole.WriteLine("Vous avez perdu !", ConsoleColor.Red);
+                ColorConsole.Write("Vous avez perdu !", ConsoleColor.Red);
             }
         }
 

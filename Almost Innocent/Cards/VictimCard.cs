@@ -1,24 +1,24 @@
 ﻿namespace Almost_Innocent.Cards
 {
-    //Carte victime
+    //Carte victime (bleu)
     public class VictimCard : BaseCard
     {
-		public VictimCard(string name, bool isAdditionalClue = false)
-			: base(name, isAdditionalClue)
+		public VictimCard(string name, string text, bool isAdditionalClue = false)
+			: base(name, text, isAdditionalClue)
 		{
 		}
 
-        public static VictimCard VEUVE_ASTUCIEUSE => new("VEUVE_ASTUCIEUSE");
+        public static VictimCard VEUVE_ASTUCIEUSE => new("VEUVE_ASTUCIEUSE", "une personne en deuil brillante");
 
-        public static VictimCard LAPIN_VIGILANT => new("LAPIN_VIGILANT");
+        public static VictimCard LAPIN_VIGILANT => new("LAPIN_VIGILANT", "un garde inébranlable");
 
-        public static VictimCard SORCIER_MALADROIT => new("SORCIER_MALADROIT");
+        public static VictimCard SORCIER_MALADROIT => new("SORCIER_MALADROIT", "un mage doté de mains qui glissent");
 
-        public static VictimCard GARDE_BATRACIEN => new("GARDE_BATRACIEN");
+        public static VictimCard GARDE_BATRACIEN => new("GARDE_BATRACIEN", "un crapaud sous-payé");
 
-        public static VictimCard GRENOUILLE_EPEISTE => new("GRENOUILLE_EPEISTE");
+        public static VictimCard GRENOUILLE_EPEISTE => new("GRENOUILLE_EPEISTE", "un soldat agité");
 
-        public static VictimCard MAGE_SENSIBLE => new("MAGE_SENSIBLE");
+        public static VictimCard MAGE_SENSIBLE => new("MAGE_SENSIBLE", "un conjurateur réputé");
 
         public static VictimCard Random()
         {

@@ -1,24 +1,24 @@
 ﻿namespace Almost_Innocent.Cards
 {
-    //Carte lieu
+    //Carte lieu (orange)
     public class PlaceCard : BaseCard
 	{
-		public PlaceCard(string name, bool isAdditionalClue = false)
-			: base(name, isAdditionalClue)
+		public PlaceCard(string name, string text, bool isAdditionalClue = false)
+			: base(name, text, isAdditionalClue)
 		{
 		}
 
-		public static PlaceCard MOULIN => new("MOULIN");
+		public static PlaceCard MOULIN => new("MOULIN", "dans un moulin partagé");
 
-        public static PlaceCard TAVERNE => new("TAVERNE");
+        public static PlaceCard TAVERNE => new("TAVERNE", "dans une taverne prestigieuse");
 
-        public static PlaceCard EGLISE => new("EGLISE");
+        public static PlaceCard EGLISE => new("EGLISE", "dans un temple miséricordieux");
 
-        public static PlaceCard PHARE => new("PHARE");
+        public static PlaceCard PHARE => new("PHARE", "dans une tour reculée");
 
-        public static PlaceCard CABANE => new("CABANE");
+        public static PlaceCard CABANE => new("CABANE", "dans une cabane ignifugée");
 
-        public static PlaceCard DONJON => new("DONJON");
+        public static PlaceCard DONJON => new("DONJON", "dans une forteresse chaleureuse");
 
         public static PlaceCard Random()
         {

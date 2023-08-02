@@ -1,24 +1,24 @@
 ﻿namespace Almost_Innocent.Cards
 {
-    //Carte coupable
+    //Carte coupable (gris/noir)
     public class GuiltyCard : BaseCard
     {
-        public GuiltyCard(string name, bool isAdditionalClue = false)
-            : base(name, isAdditionalClue)
+        public GuiltyCard(string name, string text, bool isAdditionalClue = false)
+            : base(name, text, isAdditionalClue)
         {
         }
 
-        public static GuiltyCard BARIBAL_BARBARE => new("BARIBAL_BARBARE");
+        public static GuiltyCard BARIBAL_BARBARE => new("BARIBAL_BARBARE", "un videur de mauvais poil");
 
-        public static GuiltyCard RONGEUR_RUSE => new("RONGEUR_RUSE");
+        public static GuiltyCard RONGEUR_RUSE => new("RONGEUR_RUSE", "une souris fautrice de troubles");
 
-        public static GuiltyCard MAGICIEN_MEFIANT => new("MAGICIEN_MEFIANT");
+        public static GuiltyCard MAGICIEN_MEFIANT => new("MAGICIEN_MEFIANT", "un sorcier somnolent");
 
-        public static GuiltyCard DRUIDE_DISCRETE => new("DRUIDE_DISCRETE");
+        public static GuiltyCard DRUIDE_DISCRETE => new("DRUIDE_DISCRETE", "une herboriste audacieuse");
 
-        public static GuiltyCard CROCO_AUX_CROCS_CROCHUS => new("CROCO_AUX_CROCS_CROCHUS");
+        public static GuiltyCard CROCO_AUX_CROCS_CROCHUS => new("CROCO_AUX_CROCS_CROCHUS", "un reptile insistant");
 
-        public static GuiltyCard PIRATE_PATATE => new("PIRATE_PATATE");
+        public static GuiltyCard PIRATE_PATATE => new("PIRATE_PATATE", "un marchand furtif");
 
         public static GuiltyCard Random()
         {

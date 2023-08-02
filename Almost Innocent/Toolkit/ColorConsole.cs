@@ -40,7 +40,7 @@ namespace Almost_Innocent.Toolkit
         {
             if (color.HasValue)
             {
-                var oldColor = System.Console.ForegroundColor;
+                var oldColor = Console.ForegroundColor;
                 if (color == oldColor)
                     Console.Write(text);
                 else
