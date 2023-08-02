@@ -20,12 +20,12 @@
 
         public static PlaceCard DONJON => new("DONJON", "dans une forteresse chaleureuse");
 
-        public static PlaceCard Random()
+        public static PlaceCard Random(List<PlaceCard> cards)
         {
             var random = new Random();
 
-            int index = random.Next(All.Count);
-            return All[index];
+            int index = random.Next(cards.Count);
+            return cards[index];
         }
 
         public static List<PlaceCard> All

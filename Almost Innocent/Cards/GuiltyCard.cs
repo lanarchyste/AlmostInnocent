@@ -20,12 +20,12 @@
 
         public static GuiltyCard PIRATE_PATATE => new("PIRATE_PATATE", "un marchand furtif");
 
-        public static GuiltyCard Random()
+        public static GuiltyCard Random(List<GuiltyCard> cards)
         {
             var random = new Random();
 
-            int index = random.Next(All.Count);
-            return All[index];
+            int index = random.Next(cards.Count);
+            return cards[index];
         }
 
         public static List<GuiltyCard> All

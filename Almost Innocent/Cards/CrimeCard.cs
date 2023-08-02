@@ -20,12 +20,12 @@
 
         public static CrimeCard ESCROQUERIE => new("ESCROQUERIE", "a induit en erreur");
 
-        public static CrimeCard Random()
+        public static CrimeCard Random(List<CrimeCard> cards)
         {
             var random = new Random();
 
-            int index = random.Next(All.Count);
-            return All[index];
+            int index = random.Next(cards.Count);
+            return cards[index];
         }
 
         public static List<CrimeCard> All

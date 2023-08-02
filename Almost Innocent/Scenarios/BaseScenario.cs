@@ -12,12 +12,13 @@ namespace Almost_Innocent.Scenarios
     {
         private readonly Regex _regexQuestion;
         private static readonly Regex _regexDifficultyLevel = new("^[1-3]$");
-        private static readonly Regex _regexIA = new("^(O|o|N|n)$");
+        private static readonly Regex _regexYesOrNo = new("^(O|o|N|n)$");
 
-        public BaseScenario(BaseBoard scenarioBoard, Regex regexQuestion, bool isIAEnabled, int totalSurveyTokens, int numberSurveyTokens, int cardSurveyTokens, int almostInnocentTokens)
+        public BaseScenario(BaseBoard scenarioBoard, Regex regexQuestion, bool isIAEnabled, bool isGameStartWwithClues, int totalSurveyTokens, int numberSurveyTokens, int cardSurveyTokens, int almostInnocentTokens)
 		{
             ScenarioBoard = scenarioBoard;
             IsIAEnabled = isIAEnabled;
+            IsGameStartWwithClues = isGameStartWwithClues;
             TotalSurveyTokens = totalSurveyTokens;
             NumberSurveyTokens = numberSurveyTokens;
             CardSurveyTokens = cardSurveyTokens;
@@ -29,6 +30,8 @@ namespace Almost_Innocent.Scenarios
         public BaseBoard ScenarioBoard { get; private set; }
 
         public bool IsIAEnabled { get; private set; }
+
+        public bool IsGameStartWwithClues { get; private set; }
 
         public int TotalSurveyTokens { get; private set; }
 
@@ -242,13 +245,13 @@ namespace Almost_Innocent.Scenarios
             return (DIFFICULTY_LEVEL)result;
         }
 
-        protected static bool SetIA()
+        protected static bool SetYesOrNo()
         {
             var isEnabled = Console.ReadLine();
-            if (string.IsNullOrEmpty(isEnabled) || !_regexIA.IsMatch(isEnabled))
+            if (string.IsNullOrEmpty(isEnabled) || !_regexYesOrNo.IsMatch(isEnabled))
             {
                 Console.Write("Je ne comprends pas votre choix ! ");
-                return SetIA();
+                return SetYesOrNo();
             }
 
             if (isEnabled.ToUpperInvariant() == "O")

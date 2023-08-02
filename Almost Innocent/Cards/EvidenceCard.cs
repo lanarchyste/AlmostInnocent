@@ -18,14 +18,14 @@
 
         public static EvidenceCard POTION => new("POTION", "avec une mixture à l'arachide.");
 
-        public static EvidenceCard THE_EPICE => new("THE_EPICE", "à l'aide d'une boison quasi légale.");
+        public static EvidenceCard THE_EPICE => new("THE_EPICE", "à l'aide d'une boisson quasi légale.");
 
-        public static EvidenceCard Random()
+        public static EvidenceCard Random(List<EvidenceCard> cards)
         {
             var random = new Random();
 
-            int index = random.Next(All.Count);
-            return All[index];
+            int index = random.Next(cards.Count);
+            return cards[index];
         }
 
         public static List<EvidenceCard> All

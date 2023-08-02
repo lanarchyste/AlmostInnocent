@@ -193,6 +193,26 @@ namespace Almost_Innocent.Scenarios.Boards
 
         public abstract List<string> Questions { get; }
 
+        public string GetPosition(BaseCard card)
+        {
+            for (var row = 0; row < Board.GetLength(0); row++)
+            {
+                for (var column = 0; column < Board.GetLength(1); column++)
+                {
+                    if (Board[row, column].Name == card.Name)
+                    {
+                        var position = ConvertColumnIndexToPosition(column + 1);
+                        if (string.IsNullOrEmpty(position))
+                            return string.Empty;
+
+                        return $"{position}{row + 1}";
+                    }
+                }
+            }
+
+            return string.Empty;
+        }
+
         protected List<string> BuildQuestionsRelatedToScenario()
         {
             var questions = new List<string>();
@@ -224,17 +244,7 @@ namespace Almost_Innocent.Scenarios.Boards
 
         private string BuildQuestionByColumn(BaseCard card, int column)
         {
-            var position = column switch
-            {
-                1 => "A",
-                2 => "B",
-                3 => "C",
-                4 => "D",
-                5 => "E",
-                6 => "F",
-                _ => string.Empty,
-            };
-
+            var position = ConvertColumnIndexToPosition(column);
             if (string.IsNullOrEmpty(position))
                 return string.Empty;
 
@@ -248,6 +258,18 @@ namespace Almost_Innocent.Scenarios.Boards
                 _ => string.Empty,
             };
         }
+
+        private string ConvertColumnIndexToPosition(int column)
+            => column switch
+            {
+                1 => "A",
+                2 => "B",
+                3 => "C",
+                4 => "D",
+                5 => "E",
+                6 => "F",
+                _ => string.Empty,
+            };
 
         private string GetNumberByRow(List<BaseCard> cards, int rowNumber)
         {

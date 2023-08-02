@@ -6,14 +6,14 @@ namespace Almost_Innocent.Scenarios
 {
 	public class Scenario5 : BaseScenario, IScenario
     {
-		public Scenario5(bool isIAEnabled, int totalSurveyTokens, int numberSurveyTokens, int cardSurveyTokens, int almostInnocentTokens)
-            : base(new ScenarioBoard5(), new("^(#|V|VICTIME |BLEU |P|PREUVE |VERT |L|LIEU |ORANGE |CR|CRIME |JAUNE |CO|COUPABLE |NOIR ){1}[A-F1-6]{1}$"), isIAEnabled, totalSurveyTokens, numberSurveyTokens, cardSurveyTokens, almostInnocentTokens)
+		public Scenario5(bool isIAEnabled, bool isGameStartWwithClues, int totalSurveyTokens, int numberSurveyTokens, int cardSurveyTokens, int almostInnocentTokens)
+            : base(new ScenarioBoard5(), new("^(#|V|VICTIME |BLEU |P|PREUVE |VERT |L|LIEU |ORANGE |CR|CRIME |JAUNE |CO|COUPABLE |NOIR ){1}[A-F1-6]{1}$"), isIAEnabled, isGameStartWwithClues, totalSurveyTokens, numberSurveyTokens, cardSurveyTokens, almostInnocentTokens)
         {
-            CrimeCard = CrimeCard.Random();
-            VictimCard = VictimCard.Random();
-            EvidenceCard = EvidenceCard.Random();
-            PlaceCard = PlaceCard.Random();
-            GuiltyCard = GuiltyCard.Random();
+            GuiltyCard = GuiltyCard.Random(GuiltyCard.All);
+            CrimeCard = CrimeCard.Random(CrimeCard.All);
+            VictimCard = VictimCard.Random(VictimCard.All);
+            PlaceCard = PlaceCard.Random(PlaceCard.All);
+            EvidenceCard = EvidenceCard.Random(EvidenceCard.All);
         }
 
         public CrimeCard CrimeCard { get; }
@@ -27,7 +27,39 @@ namespace Almost_Innocent.Scenarios
         public GuiltyCard GuiltyCard { get; }
 
         public void Launch()
-            => InternalLaunch();
+        {
+            if (IsGameStartWwithClues)
+            {
+                var guiltyCard = GuiltyCard.Random(GuiltyCard.All.Where(c => c != GuiltyCard).ToList());
+                var guiltyPosition = ScenarioBoard.GetPosition(guiltyCard);
+
+                var crimeCard = CrimeCard.Random(CrimeCard.All.Where(c => c != CrimeCard).ToList());
+                var crimePosition = ScenarioBoard.GetPosition(crimeCard);
+
+                var victimCard = VictimCard.Random(VictimCard.All.Where(c => c != VictimCard).ToList());
+                var victimPosition = ScenarioBoard.GetPosition(victimCard);
+
+                var placeCard = PlaceCard.Random(PlaceCard.All.Where(c => c != PlaceCard).ToList());
+                var placePosition = ScenarioBoard.GetPosition(placeCard);
+
+                var evidenceCard = EvidenceCard.Random(EvidenceCard.All.Where(c => c != EvidenceCard).ToList());
+                var evidencePosition = ScenarioBoard.GetPosition(evidenceCard);
+
+                Console.WriteLine("Voici vos indices de départ :");
+                ColorConsole.WriteEmbeddedColor($"\tÉliminer le [Gray]coupable {guiltyCard.Name.Replace('_', ' ').ToUpperInvariant()}[/Gray] ({guiltyPosition})", true);
+                ColorConsole.WriteEmbeddedColor($"\tÉliminer le [Yellow]crime {crimeCard.Name.Replace('_', ' ').ToUpperInvariant()}[/Yellow] ({crimePosition})", true);
+                ColorConsole.WriteEmbeddedColor($"\tÉliminer la [Blue]victime {victimCard.Name.Replace('_', ' ').ToUpperInvariant()}[/Blue] ({victimPosition})", true);
+                ColorConsole.WriteEmbeddedColor($"\tÉliminer le [DarkYellow]lieu {placeCard.Name.Replace('_', ' ').ToUpperInvariant()}[/DarkYellow] ({placePosition})", true);
+                ColorConsole.WriteEmbeddedColor($"\tÉliminer la [Green]preuve {evidenceCard.Name.Replace('_', ' ').ToUpperInvariant()}[/Green] ({evidencePosition})", true);
+
+                Console.WriteLine();
+                Console.WriteLine("Appuyer sur une touche dès que vous êtes prêt pour commencer la partie !");
+                Console.ReadKey();
+                Console.WriteLine();
+            }
+
+            InternalLaunch();
+        }
 
         public static Scenario5 Setup()
         {
@@ -45,10 +77,14 @@ namespace Almost_Innocent.Scenarios
 
             Console.WriteLine();
             Console.Write("Voulez-vous activer l'IA [O/N] ? ");
-            var isIAEnabled = SetIA();
+            var isIAEnabled = SetYesOrNo();
 
             Console.WriteLine();
-            return Create(difficultyLevel, isIAEnabled);
+            Console.Write("Voulez-vous obtenir des indices en début de partie [O/N] ? ");
+            var isGameStartWwithClues = SetYesOrNo();
+
+            Console.WriteLine();
+            return Create(difficultyLevel, isIAEnabled, isGameStartWwithClues);
         }
 
         protected override string Question(string question)
@@ -73,12 +109,12 @@ namespace Almost_Innocent.Scenarios
             }
         }
 
-        private static Scenario5 Create(DIFFICULTY_LEVEL level, bool isIAEnabled)
+        private static Scenario5 Create(DIFFICULTY_LEVEL level, bool isIAEnabled, bool isGameStartWwithClues)
             => level switch
             {
-                DIFFICULTY_LEVEL.DETECTIVE => new Scenario5(isIAEnabled, 10, 7, 3, 0),
-                DIFFICULTY_LEVEL.MEDIUM => new Scenario5(isIAEnabled, 11, 8, 3, 1),
-                _ => new Scenario5(isIAEnabled, 12, 9, 3, 2),
+                DIFFICULTY_LEVEL.DETECTIVE => new Scenario5(isIAEnabled, isGameStartWwithClues, 10, 7, 3, 0),
+                DIFFICULTY_LEVEL.MEDIUM => new Scenario5(isIAEnabled, isGameStartWwithClues, 11, 8, 3, 1),
+                _ => new Scenario5(isIAEnabled, isGameStartWwithClues, 12, 9, 3, 2),
             };
     }
 }

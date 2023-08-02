@@ -20,12 +20,12 @@
 
         public static VictimCard MAGE_SENSIBLE => new("MAGE_SENSIBLE", "un conjurateur réputé");
 
-        public static VictimCard Random()
+        public static VictimCard Random(List<VictimCard> cards)
         {
             var random = new Random();
 
-            int index = random.Next(All.Count);
-            return All[index];
+            int index = random.Next(cards.Count);
+            return cards[index];
         }
 
         public static List<VictimCard> All
