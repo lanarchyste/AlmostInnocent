@@ -3,7 +3,9 @@
     //Carte victime (bleu)
     public class VictimCard : BaseCard
     {
-		public VictimCard(string name, string text, bool isAdditionalClue = false)
+        private static List<VictimCard> _available = All;
+
+        public VictimCard(string name, string text, bool isAdditionalClue = false)
 			: base(name, text, isAdditionalClue)
 		{
 		}
@@ -20,16 +22,21 @@
 
         public static VictimCard MAGE_SENSIBLE => new("MAGE_SENSIBLE", "un conjurateur réputé");
 
-        public static VictimCard Random(List<VictimCard> cards)
+        public static VictimCard Random(bool isPick = true)
         {
-            var random = new Random();
+            var cardSelected = Random(_available);
 
-            int index = random.Next(cards.Count);
-            return cards[index];
+            if (isPick)
+                _available = _available.Where(c => c != cardSelected).ToList();
+
+            return cardSelected;
         }
 
         public static List<VictimCard> All
             => new() { VEUVE_ASTUCIEUSE, LAPIN_VIGILANT, SORCIER_MALADROIT, GARDE_BATRACIEN, GRENOUILLE_EPEISTE, MAGE_SENSIBLE };
+
+        public static List<VictimCard> Availables
+            => _available;
     }
 }
 

@@ -3,7 +3,9 @@
     //Carte lieu (orange)
     public class PlaceCard : BaseCard
 	{
-		public PlaceCard(string name, string text, bool isAdditionalClue = false)
+        private static List<PlaceCard> _available = All;
+
+        public PlaceCard(string name, string text, bool isAdditionalClue = false)
 			: base(name, text, isAdditionalClue)
 		{
 		}
@@ -20,16 +22,21 @@
 
         public static PlaceCard DONJON => new("DONJON", "dans une forteresse chaleureuse");
 
-        public static PlaceCard Random(List<PlaceCard> cards)
+        public static PlaceCard Random(bool isPick = true)
         {
-            var random = new Random();
+            var cardSelected = Random(_available);
 
-            int index = random.Next(cards.Count);
-            return cards[index];
+            if (isPick)
+                _available = _available.Where(c => c != cardSelected).ToList();
+
+            return cardSelected;
         }
 
         public static List<PlaceCard> All
             => new() { MOULIN, TAVERNE, EGLISE, PHARE, CABANE, DONJON };
+
+        public static List<PlaceCard> Available
+            => _available;
     }
 }
 

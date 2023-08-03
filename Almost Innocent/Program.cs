@@ -3,7 +3,7 @@
 using Almost_Innocent.Scenarios;
 using System.Text.RegularExpressions;
 
-Regex regexScenario = new("^[1-5]{1}$");
+Regex regexScenario = new("^[1-7]{1}$");
 
 Console.Write("Choisissez un scénario : ");
 
@@ -22,6 +22,8 @@ IScenario ChooseScenario()
 
     return scenario switch
     {
+        "7" => Scenario7.Setup(),
+        "6" => Scenario6.Setup(),
         "5" => Scenario5.Setup(),
         "4" => Scenario4.Setup(),
         "3" => Scenario3.Setup(),

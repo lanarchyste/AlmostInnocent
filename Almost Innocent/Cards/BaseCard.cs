@@ -19,6 +19,14 @@ namespace Almost_Innocent.Cards
 
 		public string ConvertNameToSearch()
 			=> Name.Replace('_', ' ').RemoveDiacritics().ToLowerInvariant();
+
+		protected static T Random<T>(List<T> available)
+		{
+            var random = new Random();
+
+            int index = random.Next(available.Count);
+            return available[index];
+        }
     }
 }
 

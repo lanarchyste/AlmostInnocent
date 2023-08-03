@@ -26,9 +26,6 @@ namespace Almost_Innocent.Scenarios.Boards
 					/* 5 */{ SAVON,				EMPTY,			SORCIER_MALADROIT,	INCENDIE,				EMPTY,		TAVERNE},
                     /* 6 */{ EMPTY,				PHARE,			MALEDICTION,		MAGE_SENSIBLE,			MOULIN,		EMPTY}
                 };
-
-        public override List<string> Questions
-            => CommonQuestions.Concat(BuildQuestionsRelatedToScenario()).ToList();
     }
 }
 

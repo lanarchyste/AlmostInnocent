@@ -3,7 +3,9 @@
     //Carte preuve (Vert)
     public class EvidenceCard: BaseCard
     {
-		public EvidenceCard(string name, string text, bool isAdditionalClue = false)
+        private static List<EvidenceCard> _available = All;
+
+        public EvidenceCard(string name, string text, bool isAdditionalClue = false)
 			: base(name, text, isAdditionalClue)
 		{
 		}
@@ -20,16 +22,21 @@
 
         public static EvidenceCard THE_EPICE => new("THE_EPICE", "à l'aide d'une boisson quasi légale.");
 
-        public static EvidenceCard Random(List<EvidenceCard> cards)
+        public static EvidenceCard Random(bool isPick = true)
         {
-            var random = new Random();
+            var cardSelected = Random(_available);
 
-            int index = random.Next(cards.Count);
-            return cards[index];
+            if (isPick)
+                _available = _available.Where(c => c != cardSelected).ToList();
+
+            return cardSelected;
         }
 
         public static List<EvidenceCard> All
             => new() { MONTRE, SAVON, TOME, BOUCLIER, POTION, THE_EPICE };
+
+        public static List<EvidenceCard> Available
+            => _available;
     }
 }
 

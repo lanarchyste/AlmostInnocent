@@ -191,7 +191,8 @@ namespace Almost_Innocent.Scenarios.Boards
                 _ => "-",
             };
 
-        public abstract List<string> Questions { get; }
+        public List<string> Questions
+            => CommonQuestions.Concat(BuildQuestionsRelatedToScenario()).ToList();
 
         public string GetPosition(BaseCard card)
         {

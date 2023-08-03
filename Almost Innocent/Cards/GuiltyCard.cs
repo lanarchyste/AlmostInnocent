@@ -3,6 +3,8 @@
     //Carte coupable (gris/noir)
     public class GuiltyCard : BaseCard
     {
+        private static List<GuiltyCard> _available = All;
+
         public GuiltyCard(string name, string text, bool isAdditionalClue = false)
             : base(name, text, isAdditionalClue)
         {
@@ -20,16 +22,21 @@
 
         public static GuiltyCard PIRATE_PATATE => new("PIRATE_PATATE", "un marchand furtif");
 
-        public static GuiltyCard Random(List<GuiltyCard> cards)
+        public static GuiltyCard Random(bool isPick = true)
         {
-            var random = new Random();
+            var cardSelected = Random(_available);
 
-            int index = random.Next(cards.Count);
-            return cards[index];
+            if (isPick)
+                _available = _available.Where(c => c != cardSelected).ToList();
+
+            return cardSelected;
         }
 
         public static List<GuiltyCard> All
             => new() { BARIBAL_BARBARE, RONGEUR_RUSE, MAGICIEN_MEFIANT, DRUIDE_DISCRETE, CROCO_AUX_CROCS_CROCHUS, PIRATE_PATATE };
+
+        public static List<GuiltyCard> Available
+            => _available;
     }
 }
 

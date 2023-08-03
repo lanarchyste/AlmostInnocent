@@ -1,4 +1,5 @@
 ﻿using Almost_Innocent.Cards;
+using Almost_Innocent.Characters;
 using Almost_Innocent.Scenarios.Boards;
 using Almost_Innocent.Scenarios.Exceptions;
 using Almost_Innocent.Toolkit;
@@ -11,27 +12,33 @@ namespace Almost_Innocent.Scenarios
     public abstract class BaseScenario
     {
         private readonly Regex _regexQuestion;
+        private readonly Regex? _regexCapacity;
         private static readonly Regex _regexDifficultyLevel = new("^[1-3]$");
         private static readonly Regex _regexYesOrNo = new("^(O|o|N|n)$");
+        private bool _capacityAlreadyActivated = false;
 
-        public BaseScenario(BaseBoard scenarioBoard, Regex regexQuestion, bool isIAEnabled, bool isGameStartWwithClues, int totalSurveyTokens, int numberSurveyTokens, int cardSurveyTokens, int almostInnocentTokens)
+        public BaseScenario(BaseBoard scenarioBoard, List<CardType> cardTypes, Regex regexQuestion, Regex? regexCapacity, bool isAIEnabled, bool isGameStartWithClues, int totalSurveyTokens, int numberSurveyTokens, int cardSurveyTokens, int almostInnocentTokens)
 		{
             ScenarioBoard = scenarioBoard;
-            IsIAEnabled = isIAEnabled;
-            IsGameStartWwithClues = isGameStartWwithClues;
+            CardTypes = cardTypes;
+            IsAIEnabled = isAIEnabled;
+            IsGameStartWithClues = isGameStartWithClues;
             TotalSurveyTokens = totalSurveyTokens;
             NumberSurveyTokens = numberSurveyTokens;
             CardSurveyTokens = cardSurveyTokens;
             AlmostInnocentTokens = almostInnocentTokens;
 
             _regexQuestion = regexQuestion;
+            _regexCapacity = regexCapacity;
         }
 
         public BaseBoard ScenarioBoard { get; private set; }
 
-        public bool IsIAEnabled { get; private set; }
+        public List<CardType> CardTypes { get; }
 
-        public bool IsGameStartWwithClues { get; private set; }
+        public bool IsAIEnabled { get; private set; }
+
+        public bool IsGameStartWithClues { get; private set; }
 
         public int TotalSurveyTokens { get; private set; }
 
@@ -54,9 +61,7 @@ namespace Almost_Innocent.Scenarios
         }
 
         public void DiscardAlmostInnocentToken()
-        {
-            AlmostInnocentTokens -= 1;
-        }
+            => AlmostInnocentTokens -= 1;
 
         public void TurnIA(List<string> questionsAvailable)
         {
@@ -143,46 +148,114 @@ namespace Almost_Innocent.Scenarios
                 return ReadQuestion();
             }
 
-            var question = input.ToUpperInvariant();
-            if (!IsQuestionValid(question))
+            var question = input.Trim().RemoveDiacritics().ToUpperInvariant();
+            var isQuestionValid = IsQuestionValid(question);
+            var isCapacityValid = IsCapacityValid(question);
+
+            if ((!isQuestionValid && !isCapacityValid) || (isQuestionValid && isCapacityValid))
             {
                 Console.Write("Je n'ai pas compris votre question ! ");
                 return ReadQuestion();
             }
 
-            if (!ScenarioBoard.CheckIsLocationAvailable(question))
+            if (isQuestionValid)
             {
-                Console.Write("Vous avez déjà utilisé cet emplacement ! ");
+                if (!ScenarioBoard.CheckIsLocationAvailable(question))
+                {
+                    Console.Write("Vous avez déjà utilisé cet emplacement ! ");
+                    return ReadQuestion();
+                }
+
+                if (question.StartsWith('#') && NumberSurveyTokens > 0)
+                {
+                    DiscardNumberSurveyToken();
+                    return question;
+                }
+                else if (CardSurveyTokens > 0)
+                {
+                    DiscardCardSurveyToken();
+                    return question;
+                }
+
+                Console.Write("Vous n'avez plus assez de jeton pour cette question ! ");
                 return ReadQuestion();
             }
-
-            if (question.StartsWith('#') && NumberSurveyTokens > 0)
+            else if(isCapacityValid)
             {
-                DiscardNumberSurveyToken();
-                return question;
-            }
-            else if (CardSurveyTokens > 0)
-            {
-                DiscardCardSurveyToken();
-                return question;
+                if(_capacityAlreadyActivated)
+                {
+                    Console.Write("Vous avez déjà activé votre capacité ! ");
+                    return ReadQuestion();
+                }
+
+                _capacityAlreadyActivated = true;
+                return UseCapacity(question);
             }
 
-            Console.Write("Vous n'avez plus assez de jeton pour cette question ! ");
             return ReadQuestion();
         }
 
         protected void InternalLaunch()
         {
+            if (IsGameStartWithClues)
+            {
+                Console.WriteLine("Voici vos indices de départ :");
+
+                foreach (var cardType in CardTypes)
+                {
+                    switch(cardType)
+                    {
+                        case CardType.Guilty:
+                            var guiltyCard = GuiltyCard.Random();
+                            var guiltyPosition = ScenarioBoard.GetPosition(guiltyCard);
+                            ColorConsole.WriteEmbeddedColor($"\tÉliminer le [Gray]coupable {guiltyCard.Name.Replace('_', ' ').ToUpperInvariant()}[/Gray] ({guiltyPosition})", true);
+                            break;
+
+                        case CardType.Crime:
+                            var crimeCard = CrimeCard.Random();
+                            var crimePosition = ScenarioBoard.GetPosition(crimeCard);
+                            ColorConsole.WriteEmbeddedColor($"\tÉliminer le [Yellow]crime {crimeCard.Name.Replace('_', ' ').ToUpperInvariant()}[/Yellow] ({crimePosition})", true);
+                            break;
+
+                        case CardType.Victim:
+                            var victimCard = VictimCard.Random();
+                            var victimPosition = ScenarioBoard.GetPosition(victimCard);
+                            ColorConsole.WriteEmbeddedColor($"\tÉliminer la [Blue]victime {victimCard.Name.Replace('_', ' ').ToUpperInvariant()}[/Blue] ({victimPosition})", true);
+                            break;
+
+                        case CardType.Place:
+                            var placeCard = PlaceCard.Random();
+                            var placePosition = ScenarioBoard.GetPosition(placeCard);
+                            ColorConsole.WriteEmbeddedColor($"\tÉliminer le [DarkYellow]lieu {placeCard.Name.Replace('_', ' ').ToUpperInvariant()}[/DarkYellow] ({placePosition})", true);
+                            break;
+
+                        case CardType.Evidence:
+                            var evidenceCard = EvidenceCard.Random();
+                            var evidencePosition = ScenarioBoard.GetPosition(evidenceCard);
+                            ColorConsole.WriteEmbeddedColor($"\tÉliminer la [Green]preuve {evidenceCard.Name.Replace('_', ' ').ToUpperInvariant()}[/Green] ({evidencePosition})", true);
+                            break;
+                    }
+                }
+
+                Console.WriteLine();
+                Console.WriteLine("Appuyer sur une touche dès que vous êtes prêt pour commencer la partie !");
+                Console.ReadKey();
+                Console.WriteLine();
+            }
+
             while (TotalSurveyTokens != 0)
             {
                 Console.WriteLine("---- JOUEUR ----");
                 Console.Write("Qu'elle est votre question ? ");
                 var question = ReadQuestion();
-                ColorConsole.WriteEmbeddedColor($"Votre indice : {Question(question)} [Appuyez sur Entrée]");
-                Console.Read();
-                Console.WriteLine();
+                if (!string.IsNullOrEmpty(question))
+                {
+                    ColorConsole.WriteEmbeddedColor($"Votre indice : {Question(question)} [Appuyez sur Entrée]");
+                    Console.Read();
+                    Console.WriteLine();
+                }
 
-                if (TotalSurveyTokens > 0 && IsIAEnabled)
+                if (TotalSurveyTokens > 0 && IsAIEnabled)
                 {
                     Console.WriteLine("---- IA ----");
                     TurnIA(ScenarioBoard.Questions);
@@ -286,8 +359,43 @@ namespace Almost_Innocent.Scenarios
             return Regex.Replace(sb.ToString(), @"\s+", " ", RegexOptions.Singleline).Trim();
         }
 
+        private string UseCapacity(string characterName)
+        {
+            switch (characterName)
+            {
+                case "DIN":
+                    DinCharacter.UseCapacity(ScenarioBoard, CardTypes);
+                    break;
+
+                case "TEOR":
+                    break;
+
+                case "EDD":
+                    break;
+
+                case "OKRA":
+                    break;
+
+                case "VALIA":
+                    break;
+
+                default:
+                    break;
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Appuyer sur une touche dès que vous êtes prêt à continuer !");
+            Console.ReadKey();
+            Console.WriteLine();
+
+            return string.Empty;
+        }
+
         private bool IsQuestionValid(string question)
             => _regexQuestion.IsMatch(question);
+
+        private bool IsCapacityValid(string question)
+            => _regexCapacity != null && _regexCapacity.IsMatch(question);
     }
 }
 

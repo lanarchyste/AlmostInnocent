@@ -3,7 +3,9 @@
     //Carte crime (jaune)
     public class CrimeCard : BaseCard
 	{
-		public CrimeCard(string name, string text, bool isAdditionalClue = false)
+        private static List<CrimeCard> _available = All;
+
+        public CrimeCard(string name, string text, bool isAdditionalClue = false)
             : base(name, text, isAdditionalClue)
         {
 		}
@@ -20,16 +22,21 @@
 
         public static CrimeCard ESCROQUERIE => new("ESCROQUERIE", "a induit en erreur");
 
-        public static CrimeCard Random(List<CrimeCard> cards)
+        public static CrimeCard Random(bool isPick = true)
         {
-            var random = new Random();
+            var cardSelected = Random(_available);
 
-            int index = random.Next(cards.Count);
-            return cards[index];
+            if (isPick)
+                _available = _available.Where(c => c != cardSelected).ToList();
+
+            return cardSelected;
         }
 
         public static List<CrimeCard> All
             => new() { INCENDIE, MALEDICTION, POT_DE_VIN, CHANTAGE, AGRESSION, ESCROQUERIE };
+
+        public static List<CrimeCard> Available
+            => _available;
     }
 }
 
