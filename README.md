@@ -1,0 +1,36 @@
+## TODO
+- [ ] Ajouter les scénarios
+  - [x] Scénario 1
+  - [x] Scénario 2
+  - [x] Scénario 3
+  - [x] Scénario 4
+  - [x] Scénario 5
+  - [x] Scénario 6
+  - [x] Scénario 7
+  - [ ] Scénario 8
+  - [ ] Scénario 9
+  - [ ] Scénario 10
+  - [ ] Scénario 11A
+  - [ ] Scénario 11B
+- [x] Ajouter les niveaux de difficultés
+  - [x] FACILE
+  - [x] MOYEN
+  - [x] DETECTIVE
+- [x] Ajouter les cartes
+  - [x] CRIME
+  - [x] VICTIME
+  - [x] PREUVE
+  - [x] LIEU
+  - [x] COUPABLE
+- [x] Ajouter les cartes spécial
+  - [ ] COUPABLE
+  - [ ] PREUVE
+  - [ ] VICTIME
+- [ ] Ajouter les capacités
+  - [x] DIN
+  - [ ] TEOR
+  - [ ] EDD
+  - [ ] OKRA
+  - [ ] VALIA
+- [ ] Ajouter les modules
+  - [ ] REINE
