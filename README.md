@@ -22,11 +22,11 @@
   - [x] PREUVE
   - [x] LIEU
   - [x] COUPABLE
-- [x] Ajouter les cartes spécial
+- [x] Ajouter les cartes spéciales
   - [ ] COUPABLE
   - [ ] PREUVE
   - [ ] VICTIME
-- [ ] Ajouter les capacités
+- [ ] Ajouter les capacités des personnages
   - [x] DIN
   - [ ] TEOR
   - [ ] EDD
@@ -34,4 +34,7 @@
   - [ ] VALIA
 - [ ] Ajouter les modules
   - [ ] REINE
-- [ ] Ajouter les points
+- [ ] Ajouter la gestion des parties 
+  - [ ] Sauvegarder le résultat de la partie
+  - [ ] Consulter les parties jouées
+  - [ ] Déterminer les points en fin de partie
