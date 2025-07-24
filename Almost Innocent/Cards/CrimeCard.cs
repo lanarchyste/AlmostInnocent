@@ -2,13 +2,13 @@
 {
     //Carte crime (jaune)
     public class CrimeCard : BaseCard
-	{
+    {
         private static List<CrimeCard> _available = All;
 
         public CrimeCard(string name, string text, bool isAdditionalClue = false)
             : base(name, text, isAdditionalClue)
         {
-		}
+        }
 
         public static CrimeCard INCENDIE => new("INCENDIE", "a un peu trop mis le feu à");
 

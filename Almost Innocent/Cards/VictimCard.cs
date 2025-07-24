@@ -6,9 +6,9 @@
         private static List<VictimCard> _available = All;
 
         public VictimCard(string name, string text, bool isAdditionalClue = false)
-			: base(name, text, isAdditionalClue)
-		{
-		}
+            : base(name, text, isAdditionalClue)
+        {
+        }
 
         public static VictimCard VEUVE_ASTUCIEUSE => new("VEUVE_ASTUCIEUSE", "une personne en deuil brillante");
 

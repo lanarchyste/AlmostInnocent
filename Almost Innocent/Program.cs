@@ -14,7 +14,7 @@ IScenario ChooseScenario()
 {
     var scenario = Console.ReadLine();
 
-    if(string.IsNullOrEmpty(scenario) || !regexScenario.IsMatch(scenario))
+    if (string.IsNullOrEmpty(scenario) || !regexScenario.IsMatch(scenario))
     {
         Console.Write("Je n'ai pas compris votre choix ! ");
         return ChooseScenario();

@@ -5,9 +5,9 @@ using Almost_Innocent.Toolkit;
 namespace Almost_Innocent.Characters
 {
     public class DinCharacter : BaseCharacter
-	{
+    {
         public static void UseCapacity(BaseBoard board, List<CardType> cardTypes)
-		{
+        {
             for (var i = 0; i < 3; i++)
             {
                 var cardType = Random(cardTypes);

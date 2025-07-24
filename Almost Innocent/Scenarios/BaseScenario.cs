@@ -18,7 +18,7 @@ namespace Almost_Innocent.Scenarios
         private bool _capacityAlreadyActivated = false;
 
         public BaseScenario(BaseBoard scenarioBoard, List<CardType> cardTypes, Regex regexQuestion, Regex? regexCapacity, bool isAIEnabled, bool isGameStartWithClues, int totalSurveyTokens, int numberSurveyTokens, int cardSurveyTokens, int almostInnocentTokens)
-		{
+        {
             ScenarioBoard = scenarioBoard;
             CardTypes = cardTypes;
             IsAIEnabled = isAIEnabled;
@@ -65,7 +65,7 @@ namespace Almost_Innocent.Scenarios
 
         public void TurnIA(List<string> questionsAvailable)
         {
-            if(!questionsAvailable.Any())
+            if (!questionsAvailable.Any())
             {
                 Console.Write("L'IA est dans l'incapacité de poser une question");
                 return;
@@ -84,7 +84,7 @@ namespace Almost_Innocent.Scenarios
                 int index = random.Next(questionsAvailable.Count);
                 question = questionsAvailable[index];
 
-                if((mustUseNumberSurveyToken && question.StartsWith('#')) || (!mustUseNumberSurveyToken && !question.StartsWith('#')))
+                if ((mustUseNumberSurveyToken && question.StartsWith('#')) || (!mustUseNumberSurveyToken && !question.StartsWith('#')))
                     break;
 
                 if (attempt >= (questionsAvailable.Count - 1))
@@ -180,9 +180,9 @@ namespace Almost_Innocent.Scenarios
                 Console.Write("Vous n'avez plus assez de jeton pour cette question ! ");
                 return ReadQuestion();
             }
-            else if(isCapacityValid)
+            else if (isCapacityValid)
             {
-                if(_capacityAlreadyActivated)
+                if (_capacityAlreadyActivated)
                 {
                     Console.Write("Vous avez déjà activé votre capacité ! ");
                     return ReadQuestion();
@@ -203,7 +203,7 @@ namespace Almost_Innocent.Scenarios
 
                 foreach (var cardType in CardTypes)
                 {
-                    switch(cardType)
+                    switch (cardType)
                     {
                         case CardType.Guilty:
                             var guiltyCard = GuiltyCard.Random();

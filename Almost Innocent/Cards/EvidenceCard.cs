@@ -1,20 +1,20 @@
 ﻿namespace Almost_Innocent.Cards
 {
     //Carte preuve (Vert)
-    public class EvidenceCard: BaseCard
+    public class EvidenceCard : BaseCard
     {
         private static List<EvidenceCard> _available = All;
 
         public EvidenceCard(string name, string text, bool isAdditionalClue = false)
-			: base(name, text, isAdditionalClue)
-		{
-		}
+            : base(name, text, isAdditionalClue)
+        {
+        }
 
         public static EvidenceCard MONTRE => new("MONTRE", "avec une montre de contrefaçon.");
 
         public static EvidenceCard SAVON => new("SAVON", "avec une odeur suspecte.");
-		 
-		public static EvidenceCard TOME => new("TOME", "avec un almanach mal écrit.");
+
+        public static EvidenceCard TOME => new("TOME", "avec un almanach mal écrit.");
 
         public static EvidenceCard BOUCLIER => new("BOUCLIER", "avec un superbe blindage.");
 

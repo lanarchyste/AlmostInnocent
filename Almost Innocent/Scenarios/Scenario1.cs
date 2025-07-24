@@ -12,14 +12,14 @@ namespace Almost_Innocent.Scenarios
 
         public Scenario1(bool isAIEnabled, bool isGameStartWwithClues, int totalSurveyTokens, int almostInnocentTokens)
             : base(new ScenarioBoard1(), _cardTypes, _regexQuestion, null, isAIEnabled, isGameStartWwithClues, totalSurveyTokens, totalSurveyTokens, totalSurveyTokens, almostInnocentTokens)
-		{
+        {
             CrimeCard_AI = CrimeCard.Random();
             VictimCard_AI = VictimCard.Random();
             PlaceCard_AI = PlaceCard.Random();
             EvidenceCard_AI = EvidenceCard.Random();
         }
 
-		public CrimeCard CrimeCard_AI { get; }
+        public CrimeCard CrimeCard_AI { get; }
 
         public VictimCard VictimCard_AI { get; }
 
@@ -71,14 +71,14 @@ namespace Almost_Innocent.Scenarios
                 Console.WriteLine("Félicitations, vous avez gagné !");
                 ColorConsole.Write($"Votre enquête réussie, vous concluez que le coupable {BuildHistory(new() { CrimeCard_AI, VictimCard_AI, EvidenceCard_AI, PlaceCard_AI })}", ConsoleColor.Yellow);
             }
-            catch(LostGameException)
+            catch (LostGameException)
             {
                 ColorConsole.Write("Vous avez perdu !", ConsoleColor.Red);
             }
         }
 
         private static Scenario1 Create(DIFFICULTY_LEVEL level, bool isAIEnabled, bool isGameStartWwithClues)
-		    => level switch
+            => level switch
             {
                 DIFFICULTY_LEVEL.DETECTIVE => new Scenario1(isAIEnabled, isGameStartWwithClues, 8, 0),
                 DIFFICULTY_LEVEL.MEDIUM => new Scenario1(isAIEnabled, isGameStartWwithClues, 10, 1),

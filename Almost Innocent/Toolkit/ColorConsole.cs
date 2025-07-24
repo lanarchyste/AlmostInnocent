@@ -3,7 +3,7 @@
 namespace Almost_Innocent.Toolkit
 {
     public static class ColorConsole
-	{
+    {
         public static void WriteLine(string text, ConsoleColor? color = null)
         {
             if (color.HasValue)

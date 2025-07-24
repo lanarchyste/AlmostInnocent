@@ -11,10 +11,10 @@ namespace Almost_Innocent.Scenarios.Boards
 {
     public class ScenarioBoard5 : BaseBoard
     {
-		public ScenarioBoard5()
+        public ScenarioBoard5()
             : base(BuildBoard)
         {
-		}
+        }
 
         private static BaseCard[,] BuildBoard
             => new BaseCard[6, 6] // Lignes, Colonnes

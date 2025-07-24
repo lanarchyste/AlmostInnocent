@@ -3,7 +3,7 @@
 namespace Almost_Innocent.Characters
 {
     public abstract class BaseCharacter
-	{
+    {
         protected static CardType Random(List<CardType> cardTypes)
         {
             var random = new Random();

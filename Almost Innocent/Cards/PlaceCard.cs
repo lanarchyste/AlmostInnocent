@@ -2,15 +2,15 @@
 {
     //Carte lieu (orange)
     public class PlaceCard : BaseCard
-	{
+    {
         private static List<PlaceCard> _available = All;
 
         public PlaceCard(string name, string text, bool isAdditionalClue = false)
-			: base(name, text, isAdditionalClue)
-		{
-		}
+            : base(name, text, isAdditionalClue)
+        {
+        }
 
-		public static PlaceCard MOULIN => new("MOULIN", "dans un moulin partagé");
+        public static PlaceCard MOULIN => new("MOULIN", "dans un moulin partagé");
 
         public static PlaceCard TAVERNE => new("TAVERNE", "dans une taverne prestigieuse");
 

@@ -4,18 +4,18 @@ using Almost_Innocent.Scenarios.Exceptions;
 namespace Almost_Innocent.Scenarios.Boards
 {
     public abstract class BaseBoard
-	{
+    {
         private readonly List<string> _locationUnavailable = new();
 
         public BaseBoard(BaseCard[,] board)
-		{
-			Board = board;
-		}
+        {
+            Board = board;
+        }
 
-		protected BaseCard[,] Board { get; }
+        protected BaseCard[,] Board { get; }
 
         public List<string> CommonQuestions
-            => new() { "#1", "#2", "#3", "#4", "#5", "#6", "#A", "#B", "#C",  "#D", "#E", "#F" };
+            => new() { "#1", "#2", "#3", "#4", "#5", "#6", "#A", "#B", "#C", "#D", "#E", "#F" };
 
         public bool CheckIsLocationAvailable(string question)
         => question switch

@@ -8,12 +8,12 @@ using static Almost_Innocent.Cards.VictimCard;
 
 namespace Almost_Innocent.Scenarios.Boards
 {
-	public class ScenarioBoard4 : BaseBoard
+    public class ScenarioBoard4 : BaseBoard
     {
-		public ScenarioBoard4()
+        public ScenarioBoard4()
             : base(BuildBoard)
         {
-		}
+        }
 
         private static BaseCard[,] BuildBoard
             => new BaseCard[6, 6] // Lignes, Colonnes
