@@ -1,11 +1,11 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using Almost_Innocent.Scenarios;
+﻿using Almost_Innocent.Scenarios;
 using System.Text.RegularExpressions;
 
 Regex regexScenario = new("^[1-7]{1}$");
 
-Console.Write("Choisissez un scénario : ");
+Console.Clear();
+Console.WriteLine("--- ALMOST INNOCENT ---");
+Console.Write("Choisissez un scénario [1-7] : ");
 
 var scenario = ChooseScenario();
 scenario.Launch();
@@ -15,10 +15,7 @@ IScenario ChooseScenario()
     var scenario = Console.ReadLine();
 
     if (string.IsNullOrEmpty(scenario) || !regexScenario.IsMatch(scenario))
-    {
-        Console.Write("Je n'ai pas compris votre choix ! ");
-        return ChooseScenario();
-    }
+        ChooseNotUnderstood();
 
     return scenario switch
     {
@@ -28,6 +25,14 @@ IScenario ChooseScenario()
         "4" => Scenario4.Setup(),
         "3" => Scenario3.Setup(),
         "2" => Scenario2.Setup(),
-        _ => Scenario1.Setup(),
+        "1" => Scenario1.Setup(),
+        _ => ChooseNotUnderstood(),
+
     };
+}
+
+IScenario ChooseNotUnderstood()
+{
+    Console.Write("Je n'ai pas compris votre choix ! ");
+    return ChooseScenario();
 }

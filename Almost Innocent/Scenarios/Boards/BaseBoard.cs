@@ -5,7 +5,7 @@ namespace Almost_Innocent.Scenarios.Boards
 {
     public abstract class BaseBoard
     {
-        private readonly List<string> _locationUnavailable = new();
+        private readonly List<string> _locationUnavailable = [];
 
         public BaseBoard(BaseCard[,] board)
         {
@@ -15,7 +15,7 @@ namespace Almost_Innocent.Scenarios.Boards
         protected BaseCard[,] Board { get; }
 
         public List<string> CommonQuestions
-            => new() { "#1", "#2", "#3", "#4", "#5", "#6", "#A", "#B", "#C", "#D", "#E", "#F" };
+            => ["#1", "#2", "#3", "#4", "#5", "#6", "#A", "#B", "#C", "#D", "#E", "#F"];
 
         public bool CheckIsLocationAvailable(string question)
         => question switch
@@ -197,9 +197,7 @@ namespace Almost_Innocent.Scenarios.Boards
         public string GetPosition(BaseCard card)
         {
             for (var row = 0; row < Board.GetLength(0); row++)
-            {
                 for (var column = 0; column < Board.GetLength(1); column++)
-                {
                     if (Board[row, column].Name == card.Name)
                     {
                         var position = ConvertColumnIndexToPosition(column + 1);
@@ -208,8 +206,6 @@ namespace Almost_Innocent.Scenarios.Boards
 
                         return $"{position}{row + 1}";
                     }
-                }
-            }
 
             return string.Empty;
         }
@@ -219,7 +215,6 @@ namespace Almost_Innocent.Scenarios.Boards
             var questions = new List<string>();
 
             for (var row = 0; row < Board.GetLength(0); row++)
-            {
                 for (var column = 0; column < Board.GetLength(1); column++)
                 {
                     var card = Board[row, column];
@@ -227,7 +222,6 @@ namespace Almost_Innocent.Scenarios.Boards
                     questions.Add(BuildQuestionByRow(card, row + 1));
                     questions.Add(BuildQuestionByColumn(card, column + 1));
                 }
-            }
 
             return questions.Where(x => !string.IsNullOrEmpty(x)).Distinct().ToList();
         }
@@ -365,14 +359,10 @@ namespace Almost_Innocent.Scenarios.Boards
         }
 
         private BaseCard[] GetRow(int rowNumber)
-            => Enumerable.Range(0, Board.GetLength(1))
-                    .Select(x => Board[rowNumber, x])
-                    .ToArray();
+            => [.. Enumerable.Range(0, Board.GetLength(1)).Select(x => Board[rowNumber, x])];
 
         private BaseCard[] GetColumn(int columnNumber)
-            => Enumerable.Range(0, Board.GetLength(0))
-                    .Select(x => Board[x, columnNumber])
-                    .ToArray();
+            => [.. Enumerable.Range(0, Board.GetLength(0)).Select(x => Board[x, columnNumber])];
     }
 }
 

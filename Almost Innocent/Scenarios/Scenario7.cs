@@ -10,8 +10,8 @@ namespace Almost_Innocent.Scenarios
         private static readonly Regex _regexQuestion = new("^(#|V|VICTIME |BLEU |P|PREUVE |VERT |L|LIEU |ORANGE |CR|CRIME |JAUNE |CO|COUPABLE |NOIR ){1}[A-F1-6]{1}$");
         private static readonly List<CardType> _cardTypes = new() { CardType.Guilty, CardType.Crime, CardType.Victim, CardType.Place, CardType.Evidence };
 
-        public Scenario7(bool isAIEnabled, bool isGameStartWwithClues, int totalSurveyTokens, int almostInnocentTokens)
-            : base(new ScenarioBoard7(), _cardTypes, _regexQuestion, new("^(DIN)$"), isAIEnabled, isGameStartWwithClues, totalSurveyTokens, totalSurveyTokens, totalSurveyTokens, almostInnocentTokens)
+        public Scenario7(bool isAIEnabled, bool isGameStartWithClues, int totalSurveyTokens, int almostInnocentTokens)
+            : base(new ScenarioBoard7(), _cardTypes, _regexQuestion, new("^(DIN)$"), isAIEnabled, isGameStartWithClues, totalSurveyTokens, totalSurveyTokens, totalSurveyTokens, almostInnocentTokens)
         {
             GuiltyCard_AI = GuiltyCard.Random();
             CrimeCard_AI = CrimeCard.Random();
@@ -44,7 +44,7 @@ namespace Almost_Innocent.Scenarios
             Console.WriteLine("\t1 : Facile");
             Console.WriteLine("\t2 : Moyen");
             Console.WriteLine("\t3 : Détective");
-            Console.Write("Qu'elle niveau voulez-vous ? ");
+            Console.Write("Quel niveau voulez-vous [1-3] ? ");
             var difficultyLevel = SetDifficultyLevel();
 
             Console.WriteLine();
@@ -73,7 +73,7 @@ namespace Almost_Innocent.Scenarios
                 ReadCombination(EvidenceCard.All.Cast<BaseCard>().ToList(), EvidenceCard_AI, "Qu'elle est la [Green]preuve[/Green] ? ");
 
                 Console.WriteLine("Félicitations, vous avez gagné !");
-                ColorConsole.Write($"Votre enquête réussie, vous concluez qu'{BuildHistory(new() { GuiltyCard_AI, CrimeCard_AI, VictimCard_AI, EvidenceCard_AI, PlaceCard_AI })}", ConsoleColor.Yellow);
+                ColorConsole.Write($"Votre enquête réussie, vous concluez qu'{BuildHistory([GuiltyCard_AI, CrimeCard_AI, VictimCard_AI, EvidenceCard_AI, PlaceCard_AI])}", ConsoleColor.Yellow);
             }
             catch (LostGameException)
             {
@@ -81,12 +81,12 @@ namespace Almost_Innocent.Scenarios
             }
         }
 
-        private static Scenario7 Create(DIFFICULTY_LEVEL level, bool isAIEnabled, bool isGameStartWwithClues)
+        private static Scenario7 Create(DIFFICULTY_LEVEL level, bool isAIEnabled, bool isGameStartWithClues)
             => level switch
             {
-                DIFFICULTY_LEVEL.DETECTIVE => new Scenario7(isAIEnabled, isGameStartWwithClues, 7, 2),
-                DIFFICULTY_LEVEL.MEDIUM => new Scenario7(isAIEnabled, isGameStartWwithClues, 8, 3),
-                _ => new Scenario7(isAIEnabled, isGameStartWwithClues, 10, 3),
+                DIFFICULTY_LEVEL.DETECTIVE => new Scenario7(isAIEnabled, isGameStartWithClues, 7, 2),
+                DIFFICULTY_LEVEL.MEDIUM => new Scenario7(isAIEnabled, isGameStartWithClues, 8, 3),
+                _ => new Scenario7(isAIEnabled, isGameStartWithClues, 10, 3),
             };
     }
 }

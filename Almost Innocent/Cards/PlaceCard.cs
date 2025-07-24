@@ -27,13 +27,13 @@
             var cardSelected = Random(_available);
 
             if (isPick)
-                _available = _available.Where(c => c != cardSelected).ToList();
+                _available = [.. _available.Where(c => c != cardSelected)];
 
             return cardSelected;
         }
 
         public static List<PlaceCard> All
-            => new() { MOULIN, TAVERNE, EGLISE, PHARE, CABANE, DONJON };
+            => [MOULIN, TAVERNE, EGLISE, PHARE, CABANE, DONJON];
 
         public static List<PlaceCard> Available
             => _available;

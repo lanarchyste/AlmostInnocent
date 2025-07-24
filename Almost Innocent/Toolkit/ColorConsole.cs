@@ -118,7 +118,7 @@ namespace Almost_Innocent.Toolkit
                 Console.WriteLine();
         }
 
-        private static Lazy<Regex> colorBlockRegEx = new Lazy<Regex>(() => new Regex("\\[(?<color>.*?)\\](?<text>[^[]*)\\[/\\k<color>\\]", RegexOptions.IgnoreCase), isThreadSafe: true);
+        private static Lazy<Regex> colorBlockRegEx = new(() => new Regex("\\[(?<color>.*?)\\](?<text>[^[]*)\\[/\\k<color>\\]", RegexOptions.IgnoreCase), isThreadSafe: true);
     }
 }
 
