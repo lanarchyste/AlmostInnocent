@@ -34,6 +34,11 @@
   - [ ] VALIA
 - [ ] Ajouter les modules
   - [ ] REINE
+- [ ] Améliorer la gestion de l'IA
+  - [ ] Pouvoir définir son comportement sur l'utilisation des jetons
+    - [ ] Avoir un comportement pour utiliser un jeton qui est en majorité
+    - [ ] Avoir un comportement pour utiliser un jeton qui est en minorité
+    - [ ] Avoir un comportement pour utiliser une ligne ou une colonne qui aide le plus possible le joueur en fonction de son avancée
 - [ ] Ajouter la gestion des parties 
   - [ ] Sauvegarder le résultat de la partie
   - [ ] Consulter les parties jouées

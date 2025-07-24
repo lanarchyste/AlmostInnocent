@@ -5,7 +5,7 @@
     {
         private static List<VictimCard> _available = All;
 
-        public VictimCard(string name, string text, bool isAdditionalClue = false)
+        private VictimCard(string name, string text, bool isAdditionalClue = false)
             : base(name, text, isAdditionalClue)
         {
         }
@@ -35,7 +35,7 @@
         public static List<VictimCard> All
             => [VEUVE_ASTUCIEUSE, LAPIN_VIGILANT, SORCIER_MALADROIT, GARDE_BATRACIEN, GRENOUILLE_EPEISTE, MAGE_SENSIBLE];
 
-        public static List<VictimCard> Availables
+        public static List<VictimCard> Available
             => _available;
     }
 }

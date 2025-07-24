@@ -4,7 +4,7 @@ namespace Almost_Innocent.Cards
 {
     public class BaseCard
     {
-        public BaseCard(string name, string text, bool isAdditionalClue)
+        protected BaseCard(string name, string text, bool isAdditionalClue)
         {
             Name = name;
             Text = text;

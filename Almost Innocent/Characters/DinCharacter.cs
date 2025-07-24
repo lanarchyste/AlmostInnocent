@@ -4,7 +4,7 @@ using Almost_Innocent.Toolkit;
 
 namespace Almost_Innocent.Characters
 {
-    public class DinCharacter : BaseCharacter
+    public abstract class DinCharacter : BaseCharacter
     {
         public static void UseCapacity(BaseBoard board, List<CardType> cardTypes)
         {

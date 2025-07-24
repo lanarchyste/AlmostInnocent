@@ -9,15 +9,10 @@ using static Almost_Innocent.Cards.VictimCard;
 
 namespace Almost_Innocent.Scenarios.Boards
 {
-    public class ScenarioBoard6 : BaseBoard
+    public class ScenarioBoard6() : BaseBoard(BuildBoard)
     {
-        public ScenarioBoard6()
-            : base(BuildBoard)
-        {
-        }
-
         private static BaseCard[,] BuildBoard
-            => new BaseCard[6, 6] // Lignes, Colonnes
+            => new BaseCard[,] // Lignes, Colonnes
 				{
 							 /* A */            /* B */             /* C */             /* D */         /* E */                     /* F */
 					/* 1 */{ GARDE_BATRACIEN,   RONGEUR_RUSE,       BARIBAL_BARBARE,    BOUCLIER,       MAGICIEN_MEFIANT,           AGRESSION},

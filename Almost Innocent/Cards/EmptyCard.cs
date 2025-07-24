@@ -2,7 +2,7 @@
 {
     public class EmptyCard : BaseCard
     {
-        public EmptyCard()
+        private EmptyCard()
             : base(string.Empty, string.Empty, false)
         {
         }

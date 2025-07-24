@@ -5,7 +5,7 @@
     {
         private static List<PlaceCard> _available = All;
 
-        public PlaceCard(string name, string text, bool isAdditionalClue = false)
+        private PlaceCard(string name, string text, bool isAdditionalClue = false)
             : base(name, text, isAdditionalClue)
         {
         }

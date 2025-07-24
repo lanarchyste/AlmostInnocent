@@ -5,7 +5,7 @@
     {
         private static List<GuiltyCard> _available = All;
 
-        public GuiltyCard(string name, string text, bool isAdditionalClue = false)
+        private GuiltyCard(string name, string text, bool isAdditionalClue = false)
             : base(name, text, isAdditionalClue)
         {
         }

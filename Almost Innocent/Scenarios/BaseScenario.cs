@@ -13,11 +13,11 @@ namespace Almost_Innocent.Scenarios
     {
         private readonly Regex _regexQuestion;
         private readonly Regex? _regexCapacity;
-        private static readonly Regex _regexDifficultyLevel = new("^[1-3]$");
-        private static readonly Regex _regexYesOrNo = new("^(O|o|N|n)$");
-        private bool _capacityAlreadyActivated = false;
+        private static readonly Regex RegexDifficultyLevel = new("^[1-3]$");
+        private static readonly Regex RegexYesOrNo = new("^(O|o|N|n)$");
+        private bool _capacityAlreadyActivated;
 
-        public BaseScenario(BaseBoard scenarioBoard, List<CardType> cardTypes, Regex regexQuestion, Regex? regexCapacity, bool isAIEnabled, bool isGameStartWithClues, int totalSurveyTokens, int numberSurveyTokens, int cardSurveyTokens, int almostInnocentTokens)
+        protected BaseScenario(BaseBoard scenarioBoard, List<CardType> cardTypes, Regex regexQuestion, Regex? regexCapacity, bool isAIEnabled, bool isGameStartWithClues, int totalSurveyTokens, int numberSurveyTokens, int cardSurveyTokens, int almostInnocentTokens)
         {
             ScenarioBoard = scenarioBoard;
             CardTypes = cardTypes;
@@ -32,40 +32,40 @@ namespace Almost_Innocent.Scenarios
             _regexCapacity = regexCapacity;
         }
 
-        public BaseBoard ScenarioBoard { get; private set; }
+        protected BaseBoard ScenarioBoard { get; private set; }
 
-        public List<CardType> CardTypes { get; }
+        private List<CardType> CardTypes { get; }
 
-        public bool IsAIEnabled { get; private set; }
+        private bool IsAIEnabled { get; set; }
 
-        public bool IsGameStartWithClues { get; private set; }
+        private bool IsGameStartWithClues { get; set; }
 
-        public int TotalSurveyTokens { get; private set; }
+        private int TotalSurveyTokens { get; set; }
 
-        public int NumberSurveyTokens { get; private set; }
+        private int NumberSurveyTokens { get; set; }
 
-        public int CardSurveyTokens { get; private set; }
+        private int CardSurveyTokens { get; set; }
 
-        public int AlmostInnocentTokens { get; private set; }
+        private int AlmostInnocentTokens { get; set; }
 
-        public void DiscardNumberSurveyToken()
+        private void DiscardNumberSurveyToken()
         {
             TotalSurveyTokens -= 1;
             NumberSurveyTokens -= 1;
         }
 
-        public void DiscardCardSurveyToken()
+        private void DiscardCardSurveyToken()
         {
             TotalSurveyTokens -= 1;
             CardSurveyTokens -= 1;
         }
 
-        public void DiscardAlmostInnocentToken()
+        private void DiscardAlmostInnocentToken()
             => AlmostInnocentTokens -= 1;
 
-        public void TurnIA(List<string> questionsAvailable)
+        private void TurnIA(List<string> questionsAvailable)
         {
-            if (!questionsAvailable.Any())
+            if (questionsAvailable.Count == 0)
             {
                 Console.Write("L'IA est dans l'incapacité de poser une question");
                 return;
@@ -139,7 +139,7 @@ namespace Almost_Innocent.Scenarios
             }
         }
 
-        public string ReadQuestion()
+        private string ReadQuestion()
         {
             var input = Console.ReadLine();
             if (string.IsNullOrEmpty(input))
@@ -281,7 +281,7 @@ namespace Almost_Innocent.Scenarios
 
             card = card.Trim().RemoveDiacritics().ToLowerInvariant();
 
-            var count = cards.Where(c => c.ConvertNameToSearch().Equals(card, StringComparison.InvariantCultureIgnoreCase)).Count();
+            var count = cards.Count(c => c.ConvertNameToSearch().Equals(card, StringComparison.InvariantCultureIgnoreCase));
             if (count != 1)
             {
                 Console.WriteLine("Je ne connais pas la carte !");
@@ -309,7 +309,7 @@ namespace Almost_Innocent.Scenarios
         protected static DIFFICULTY_LEVEL SetDifficultyLevel()
         {
             var level = Console.ReadLine();
-            if (string.IsNullOrEmpty(level) || !_regexDifficultyLevel.IsMatch(level) || !int.TryParse(level, out var result))
+            if (string.IsNullOrEmpty(level) || !RegexDifficultyLevel.IsMatch(level) || !int.TryParse(level, out var result))
             {
                 Console.Write("Je ne comprends pas votre choix ! ");
                 return SetDifficultyLevel();
@@ -321,7 +321,7 @@ namespace Almost_Innocent.Scenarios
         protected static bool SetYesOrNo()
         {
             var isEnabled = Console.ReadLine();
-            if (string.IsNullOrEmpty(isEnabled) || !_regexYesOrNo.IsMatch(isEnabled))
+            if (string.IsNullOrEmpty(isEnabled) || !RegexYesOrNo.IsMatch(isEnabled))
             {
                 Console.Write("Je ne comprends pas votre choix ! ");
                 return SetYesOrNo();
@@ -377,9 +377,6 @@ namespace Almost_Innocent.Scenarios
                     break;
 
                 case "VALIA":
-                    break;
-
-                default:
                     break;
             }
 

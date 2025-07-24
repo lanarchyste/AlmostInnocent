@@ -7,11 +7,11 @@ namespace Almost_Innocent.Scenarios
 {
     public class Scenario7 : BaseScenario, IScenario
     {
-        private static readonly Regex _regexQuestion = new("^(#|V|VICTIME |BLEU |P|PREUVE |VERT |L|LIEU |ORANGE |CR|CRIME |JAUNE |CO|COUPABLE |NOIR ){1}[A-F1-6]{1}$");
-        private static readonly List<CardType> _cardTypes = new() { CardType.Guilty, CardType.Crime, CardType.Victim, CardType.Place, CardType.Evidence };
+        private static readonly Regex RegexQuestion = new("^(#|V|VICTIME |BLEU |P|PREUVE |VERT |L|LIEU |ORANGE |CR|CRIME |JAUNE |CO|COUPABLE |NOIR ){1}[A-F1-6]{1}$");
+        private static readonly List<CardType> ScenarioCardTypes = [CardType.Guilty, CardType.Crime, CardType.Victim, CardType.Place, CardType.Evidence];
 
-        public Scenario7(bool isAIEnabled, bool isGameStartWithClues, int totalSurveyTokens, int almostInnocentTokens)
-            : base(new ScenarioBoard7(), _cardTypes, _regexQuestion, new("^(DIN)$"), isAIEnabled, isGameStartWithClues, totalSurveyTokens, totalSurveyTokens, totalSurveyTokens, almostInnocentTokens)
+        private Scenario7(bool isAIEnabled, bool isGameStartWithClues, int totalSurveyTokens, int almostInnocentTokens)
+            : base(new ScenarioBoard7(), ScenarioCardTypes, RegexQuestion, new("^(DIN)$"), isAIEnabled, isGameStartWithClues, totalSurveyTokens, totalSurveyTokens, totalSurveyTokens, almostInnocentTokens)
         {
             GuiltyCard_AI = GuiltyCard.Random();
             CrimeCard_AI = CrimeCard.Random();
@@ -20,15 +20,15 @@ namespace Almost_Innocent.Scenarios
             EvidenceCard_AI = EvidenceCard.Random();
         }
 
-        public GuiltyCard GuiltyCard_AI { get; }
+        private GuiltyCard GuiltyCard_AI { get; }
 
-        public CrimeCard CrimeCard_AI { get; }
+        private CrimeCard CrimeCard_AI { get; }
 
-        public VictimCard VictimCard_AI { get; }
+        private VictimCard VictimCard_AI { get; }
 
-        public PlaceCard PlaceCard_AI { get; }
+        private PlaceCard PlaceCard_AI { get; }
 
-        public EvidenceCard EvidenceCard_AI { get; }
+        private EvidenceCard EvidenceCard_AI { get; }
 
         public void Launch()
             => InternalLaunch();
@@ -53,14 +53,14 @@ namespace Almost_Innocent.Scenarios
 
             Console.WriteLine();
             Console.Write("Voulez-vous obtenir des indices en début de partie [O/N] ? ");
-            var isGameStartWwithClues = SetYesOrNo();
+            var isGameStartWithClues = SetYesOrNo();
 
             Console.WriteLine();
-            return Create(difficultyLevel, isAIEnabled, isGameStartWwithClues);
+            return Create(difficultyLevel, isAIEnabled, isGameStartWithClues);
         }
 
         protected override string Question(string question)
-            => ScenarioBoard.Question(question, new() { CrimeCard_AI, VictimCard_AI, EvidenceCard_AI, PlaceCard_AI, GuiltyCard_AI });
+            => ScenarioBoard.Question(question, [CrimeCard_AI, VictimCard_AI, EvidenceCard_AI, PlaceCard_AI, GuiltyCard_AI]);
 
         protected override void SolvingCombinations()
         {

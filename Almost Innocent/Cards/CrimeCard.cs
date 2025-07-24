@@ -5,7 +5,7 @@
     {
         private static List<CrimeCard> _available = All;
 
-        public CrimeCard(string name, string text, bool isAdditionalClue = false)
+        private CrimeCard(string name, string text, bool isAdditionalClue = false)
             : base(name, text, isAdditionalClue)
         {
         }

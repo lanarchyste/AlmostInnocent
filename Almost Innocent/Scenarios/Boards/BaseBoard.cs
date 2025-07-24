@@ -3,18 +3,13 @@ using Almost_Innocent.Scenarios.Exceptions;
 
 namespace Almost_Innocent.Scenarios.Boards
 {
-    public abstract class BaseBoard
+    public abstract class BaseBoard(BaseCard[,] board)
     {
         private readonly List<string> _locationUnavailable = [];
 
-        public BaseBoard(BaseCard[,] board)
-        {
-            Board = board;
-        }
+        private BaseCard[,] Board { get; } = board;
 
-        protected BaseCard[,] Board { get; }
-
-        public List<string> CommonQuestions
+        private List<string> CommonQuestions
             => ["#1", "#2", "#3", "#4", "#5", "#6", "#A", "#B", "#C", "#D", "#E", "#F"];
 
         public bool CheckIsLocationAvailable(string question)
@@ -50,70 +45,70 @@ namespace Almost_Innocent.Scenarios.Boards
                 "#D" => GetNumberByColumn(cards, 3),
                 "#E" => GetNumberByColumn(cards, 4),
                 "#F" => GetNumberByColumn(cards, 5),
-                "V1" or "VICTIME 1" or "BLEU 1" => SearchByRow<VictimCard>(cards, 0),
-                "V2" or "VICTIME 2" or "BLEU 2" => SearchByRow<VictimCard>(cards, 1),
-                "V3" or "VICTIME 3" or "BLEU 3" => SearchByRow<VictimCard>(cards, 2),
-                "V4" or "VICTIME 4" or "BLEU 4" => SearchByRow<VictimCard>(cards, 3),
-                "V5" or "VICTIME 5" or "BLEU 5" => SearchByRow<VictimCard>(cards, 4),
-                "V6" or "VICTIME 6" or "BLEU 6" => SearchByRow<VictimCard>(cards, 5),
-                "VA" or "VICTIME A" or "BLEU A" => SearchByColumn<VictimCard>(cards, 0),
-                "VB" or "VICTIME B" or "BLEU B" => SearchByColumn<VictimCard>(cards, 1),
-                "VC" or "VICTIME C" or "BLEU C" => SearchByColumn<VictimCard>(cards, 2),
-                "VD" or "VICTIME D" or "BLEU D" => SearchByColumn<VictimCard>(cards, 3),
-                "VE" or "VICTIME E" or "BLEU E" => SearchByColumn<VictimCard>(cards, 4),
-                "VF" or "VICTIME F" or "BLEU F" => SearchByColumn<VictimCard>(cards, 5),
-                "P1" or "PREUVE 1" or "VERT 1" => SearchByRow<EvidenceCard>(cards, 0),
-                "P2" or "PREUVE 2" or "VERT 2" => SearchByRow<EvidenceCard>(cards, 1),
-                "P3" or "PREUVE 3" or "VERT 3" => SearchByRow<EvidenceCard>(cards, 2),
-                "P4" or "PREUVE 4" or "VERT 4" => SearchByRow<EvidenceCard>(cards, 3),
-                "P5" or "PREUVE 5" or "VERT 5" => SearchByRow<EvidenceCard>(cards, 4),
-                "P6" or "PREUVE 6" or "VERT 6" => SearchByRow<EvidenceCard>(cards, 5),
-                "PA" or "PREUVE A" or "VERT A" => SearchByColumn<EvidenceCard>(cards, 0),
-                "PB" or "PREUVE B" or "VERT B" => SearchByColumn<EvidenceCard>(cards, 1),
-                "PC" or "PREUVE C" or "VERT C" => SearchByColumn<EvidenceCard>(cards, 2),
-                "PD" or "PREUVE D" or "VERT D" => SearchByColumn<EvidenceCard>(cards, 3),
-                "PE" or "PREUVE E" or "VERT E" => SearchByColumn<EvidenceCard>(cards, 4),
-                "PF" or "PREUVE F" or "VERT F" => SearchByColumn<EvidenceCard>(cards, 5),
-                "L1" or "LIEU 1" or "ORANGE 1" => SearchByRow<PlaceCard>(cards, 0),
-                "L2" or "LIEU 2" or "ORANGE 2" => SearchByRow<PlaceCard>(cards, 1),
-                "L3" or "LIEU 3" or "ORANGE 3" => SearchByRow<PlaceCard>(cards, 2),
-                "L4" or "LIEU 4" or "ORANGE 4" => SearchByRow<PlaceCard>(cards, 3),
-                "L5" or "LIEU 5" or "ORANGE 5" => SearchByRow<PlaceCard>(cards, 4),
-                "L6" or "LIEU 6" or "ORANGE 6" => SearchByRow<PlaceCard>(cards, 5),
-                "LA" or "LIEU A" or "ORANGE A" => SearchByColumn<PlaceCard>(cards, 0),
-                "LB" or "LIEU B" or "ORANGE B" => SearchByColumn<PlaceCard>(cards, 1),
-                "LC" or "LIEU C" or "ORANGE C" => SearchByColumn<PlaceCard>(cards, 2),
-                "LD" or "LIEU D" or "ORANGE D" => SearchByColumn<PlaceCard>(cards, 3),
-                "LE" or "LIEU E" or "ORANGE E" => SearchByColumn<PlaceCard>(cards, 4),
-                "LF" or "LIEU F" or "ORANGE F" => SearchByColumn<PlaceCard>(cards, 5),
-                "CR1" or "CRIME 1" or "JAUNE 1" => SearchByRow<CrimeCard>(cards, 0),
-                "CR2" or "CRIME 2" or "JAUNE 2" => SearchByRow<CrimeCard>(cards, 1),
-                "CR3" or "CRIME 3" or "JAUNE 3" => SearchByRow<CrimeCard>(cards, 2),
-                "CR4" or "CRIME 4" or "JAUNE 4" => SearchByRow<CrimeCard>(cards, 3),
-                "CR5" or "CRIME 5" or "JAUNE 5" => SearchByRow<CrimeCard>(cards, 4),
-                "CR6" or "CRIME 6" or "JAUNE 6" => SearchByRow<CrimeCard>(cards, 5),
-                "CRA" or "CRIME A" or "JAUNE A" => SearchByColumn<CrimeCard>(cards, 0),
-                "CRB" or "CRIME B" or "JAUNE B" => SearchByColumn<CrimeCard>(cards, 1),
-                "CRC" or "CRIME C" or "JAUNE C" => SearchByColumn<CrimeCard>(cards, 2),
-                "CRD" or "CRIME D" or "JAUNE D" => SearchByColumn<CrimeCard>(cards, 3),
-                "CRE" or "CRIME E" or "JAUNE E" => SearchByColumn<CrimeCard>(cards, 4),
-                "CRF" or "CRIME F" or "JAUNE F" => SearchByColumn<CrimeCard>(cards, 5),
-                "CO1" or "COUPABLE 1" or "NOIR 1" => SearchByRow<GuiltyCard>(cards, 0),
-                "CO2" or "COUPABLE 2" or "NOIR 2" => SearchByRow<GuiltyCard>(cards, 1),
-                "CO3" or "COUPABLE 3" or "NOIR 3" => SearchByRow<GuiltyCard>(cards, 2),
-                "CO4" or "COUPABLE 4" or "NOIR 4" => SearchByRow<GuiltyCard>(cards, 3),
-                "CO5" or "COUPABLE 5" or "NOIR 5" => SearchByRow<GuiltyCard>(cards, 4),
-                "CO6" or "COUPABLE 6" or "NOIR 6" => SearchByRow<GuiltyCard>(cards, 5),
-                "COA" or "COUPABLE A" or "NOIR A" => SearchByColumn<GuiltyCard>(cards, 0),
-                "COB" or "COUPABLE B" or "NOIR B" => SearchByColumn<GuiltyCard>(cards, 1),
-                "COC" or "COUPABLE C" or "NOIR C" => SearchByColumn<GuiltyCard>(cards, 2),
-                "COD" or "COUPABLE D" or "NOIR D" => SearchByColumn<GuiltyCard>(cards, 3),
-                "COE" or "COUPABLE E" or "NOIR E" => SearchByColumn<GuiltyCard>(cards, 4),
-                "COF" or "COUPABLE F" or "NOIR F" => SearchByColumn<GuiltyCard>(cards, 5),
+                "V1" or "VICTIME 1" or "BLEU 1" => SearchCardByRow<VictimCard>(cards, 0),
+                "V2" or "VICTIME 2" or "BLEU 2" => SearchCardByRow<VictimCard>(cards, 1),
+                "V3" or "VICTIME 3" or "BLEU 3" => SearchCardByRow<VictimCard>(cards, 2),
+                "V4" or "VICTIME 4" or "BLEU 4" => SearchCardByRow<VictimCard>(cards, 3),
+                "V5" or "VICTIME 5" or "BLEU 5" => SearchCardByRow<VictimCard>(cards, 4),
+                "V6" or "VICTIME 6" or "BLEU 6" => SearchCardByRow<VictimCard>(cards, 5),
+                "VA" or "VICTIME A" or "BLEU A" => SearchCardByColumn<VictimCard>(cards, 0),
+                "VB" or "VICTIME B" or "BLEU B" => SearchCardByColumn<VictimCard>(cards, 1),
+                "VC" or "VICTIME C" or "BLEU C" => SearchCardByColumn<VictimCard>(cards, 2),
+                "VD" or "VICTIME D" or "BLEU D" => SearchCardByColumn<VictimCard>(cards, 3),
+                "VE" or "VICTIME E" or "BLEU E" => SearchCardByColumn<VictimCard>(cards, 4),
+                "VF" or "VICTIME F" or "BLEU F" => SearchCardByColumn<VictimCard>(cards, 5),
+                "P1" or "PREUVE 1" or "VERT 1" => SearchCardByRow<EvidenceCard>(cards, 0),
+                "P2" or "PREUVE 2" or "VERT 2" => SearchCardByRow<EvidenceCard>(cards, 1),
+                "P3" or "PREUVE 3" or "VERT 3" => SearchCardByRow<EvidenceCard>(cards, 2),
+                "P4" or "PREUVE 4" or "VERT 4" => SearchCardByRow<EvidenceCard>(cards, 3),
+                "P5" or "PREUVE 5" or "VERT 5" => SearchCardByRow<EvidenceCard>(cards, 4),
+                "P6" or "PREUVE 6" or "VERT 6" => SearchCardByRow<EvidenceCard>(cards, 5),
+                "PA" or "PREUVE A" or "VERT A" => SearchCardByColumn<EvidenceCard>(cards, 0),
+                "PB" or "PREUVE B" or "VERT B" => SearchCardByColumn<EvidenceCard>(cards, 1),
+                "PC" or "PREUVE C" or "VERT C" => SearchCardByColumn<EvidenceCard>(cards, 2),
+                "PD" or "PREUVE D" or "VERT D" => SearchCardByColumn<EvidenceCard>(cards, 3),
+                "PE" or "PREUVE E" or "VERT E" => SearchCardByColumn<EvidenceCard>(cards, 4),
+                "PF" or "PREUVE F" or "VERT F" => SearchCardByColumn<EvidenceCard>(cards, 5),
+                "L1" or "LIEU 1" or "ORANGE 1" => SearchCardByRow<PlaceCard>(cards, 0),
+                "L2" or "LIEU 2" or "ORANGE 2" => SearchCardByRow<PlaceCard>(cards, 1),
+                "L3" or "LIEU 3" or "ORANGE 3" => SearchCardByRow<PlaceCard>(cards, 2),
+                "L4" or "LIEU 4" or "ORANGE 4" => SearchCardByRow<PlaceCard>(cards, 3),
+                "L5" or "LIEU 5" or "ORANGE 5" => SearchCardByRow<PlaceCard>(cards, 4),
+                "L6" or "LIEU 6" or "ORANGE 6" => SearchCardByRow<PlaceCard>(cards, 5),
+                "LA" or "LIEU A" or "ORANGE A" => SearchCardByColumn<PlaceCard>(cards, 0),
+                "LB" or "LIEU B" or "ORANGE B" => SearchCardByColumn<PlaceCard>(cards, 1),
+                "LC" or "LIEU C" or "ORANGE C" => SearchCardByColumn<PlaceCard>(cards, 2),
+                "LD" or "LIEU D" or "ORANGE D" => SearchCardByColumn<PlaceCard>(cards, 3),
+                "LE" or "LIEU E" or "ORANGE E" => SearchCardByColumn<PlaceCard>(cards, 4),
+                "LF" or "LIEU F" or "ORANGE F" => SearchCardByColumn<PlaceCard>(cards, 5),
+                "CR1" or "CRIME 1" or "JAUNE 1" => SearchCardByRow<CrimeCard>(cards, 0),
+                "CR2" or "CRIME 2" or "JAUNE 2" => SearchCardByRow<CrimeCard>(cards, 1),
+                "CR3" or "CRIME 3" or "JAUNE 3" => SearchCardByRow<CrimeCard>(cards, 2),
+                "CR4" or "CRIME 4" or "JAUNE 4" => SearchCardByRow<CrimeCard>(cards, 3),
+                "CR5" or "CRIME 5" or "JAUNE 5" => SearchCardByRow<CrimeCard>(cards, 4),
+                "CR6" or "CRIME 6" or "JAUNE 6" => SearchCardByRow<CrimeCard>(cards, 5),
+                "CRA" or "CRIME A" or "JAUNE A" => SearchCardByColumn<CrimeCard>(cards, 0),
+                "CRB" or "CRIME B" or "JAUNE B" => SearchCardByColumn<CrimeCard>(cards, 1),
+                "CRC" or "CRIME C" or "JAUNE C" => SearchCardByColumn<CrimeCard>(cards, 2),
+                "CRD" or "CRIME D" or "JAUNE D" => SearchCardByColumn<CrimeCard>(cards, 3),
+                "CRE" or "CRIME E" or "JAUNE E" => SearchCardByColumn<CrimeCard>(cards, 4),
+                "CRF" or "CRIME F" or "JAUNE F" => SearchCardByColumn<CrimeCard>(cards, 5),
+                "CO1" or "COUPABLE 1" or "NOIR 1" => SearchCardByRow<GuiltyCard>(cards, 0),
+                "CO2" or "COUPABLE 2" or "NOIR 2" => SearchCardByRow<GuiltyCard>(cards, 1),
+                "CO3" or "COUPABLE 3" or "NOIR 3" => SearchCardByRow<GuiltyCard>(cards, 2),
+                "CO4" or "COUPABLE 4" or "NOIR 4" => SearchCardByRow<GuiltyCard>(cards, 3),
+                "CO5" or "COUPABLE 5" or "NOIR 5" => SearchCardByRow<GuiltyCard>(cards, 4),
+                "CO6" or "COUPABLE 6" or "NOIR 6" => SearchCardByRow<GuiltyCard>(cards, 5),
+                "COA" or "COUPABLE A" or "NOIR A" => SearchCardByColumn<GuiltyCard>(cards, 0),
+                "COB" or "COUPABLE B" or "NOIR B" => SearchCardByColumn<GuiltyCard>(cards, 1),
+                "COC" or "COUPABLE C" or "NOIR C" => SearchCardByColumn<GuiltyCard>(cards, 2),
+                "COD" or "COUPABLE D" or "NOIR D" => SearchCardByColumn<GuiltyCard>(cards, 3),
+                "COE" or "COUPABLE E" or "NOIR E" => SearchCardByColumn<GuiltyCard>(cards, 4),
+                "COF" or "COUPABLE F" or "NOIR F" => SearchCardByColumn<GuiltyCard>(cards, 5),
                 _ => "-",
             };
 
-        public string ConvertQuestionToHumanReading(string question)
+        public static string ConvertQuestionToHumanReading(string question)
             => question switch
             {
                 "#1" => "Combien d'indices vous concerne dans la ligne 1 ?",
@@ -210,7 +205,7 @@ namespace Almost_Innocent.Scenarios.Boards
             return string.Empty;
         }
 
-        protected List<string> BuildQuestionsRelatedToScenario()
+        private List<string> BuildQuestionsRelatedToScenario()
         {
             var questions = new List<string>();
 
@@ -223,10 +218,10 @@ namespace Almost_Innocent.Scenarios.Boards
                     questions.Add(BuildQuestionByColumn(card, column + 1));
                 }
 
-            return questions.Where(x => !string.IsNullOrEmpty(x)).Distinct().ToList();
+            return [.. questions.Where(x => !string.IsNullOrEmpty(x)).Distinct()];
         }
 
-        private string BuildQuestionByRow(BaseCard card, int row)
+        private static string BuildQuestionByRow(BaseCard card, int row)
             => card switch
             {
                 CrimeCard => $"CR{row}",
@@ -237,7 +232,7 @@ namespace Almost_Innocent.Scenarios.Boards
                 _ => string.Empty,
             };
 
-        private string BuildQuestionByColumn(BaseCard card, int column)
+        private static string BuildQuestionByColumn(BaseCard card, int column)
         {
             var position = ConvertColumnIndexToPosition(column);
             if (string.IsNullOrEmpty(position))
@@ -254,7 +249,7 @@ namespace Almost_Innocent.Scenarios.Boards
             };
         }
 
-        private string ConvertColumnIndexToPosition(int column)
+        private static string ConvertColumnIndexToPosition(int column)
             => column switch
             {
                 1 => "A",
@@ -294,7 +289,7 @@ namespace Almost_Innocent.Scenarios.Boards
                 return "-";
         }
 
-        private string SearchByRow<T>(List<BaseCard> cards, int rowNumber)
+        private string SearchCardByRow<T>(List<BaseCard> cards, int rowNumber)
         {
             if (UseRow(rowNumber))
             {
@@ -308,7 +303,7 @@ namespace Almost_Innocent.Scenarios.Boards
                 return "-";
         }
 
-        private string SearchByColumn<T>(List<BaseCard> cards, int columnNumber)
+        private string SearchCardByColumn<T>(List<BaseCard> cards, int columnNumber)
         {
             if (UseColumn(columnNumber))
             {
@@ -322,8 +317,8 @@ namespace Almost_Innocent.Scenarios.Boards
                 return "-";
         }
 
-        private bool UseRow(int rowNumber)
-            => rowNumber switch
+        private bool UseRow(int row)
+            => row switch
             {
                 0 => UseLocation("1"),
                 1 => UseLocation("2"),
@@ -334,8 +329,8 @@ namespace Almost_Innocent.Scenarios.Boards
                 _ => throw new QuestionException(),
             };
 
-        private bool UseColumn(int columnNumber)
-            => columnNumber switch
+        private bool UseColumn(int column)
+            => column switch
             {
                 0 => UseLocation("A"),
                 1 => UseLocation("B"),
@@ -358,11 +353,11 @@ namespace Almost_Innocent.Scenarios.Boards
             return true;
         }
 
-        private BaseCard[] GetRow(int rowNumber)
-            => [.. Enumerable.Range(0, Board.GetLength(1)).Select(x => Board[rowNumber, x])];
+        private BaseCard[] GetCardsByRow(int row)
+            => [.. Enumerable.Range(0, Board.GetLength(1)).Select(column => Board[row, column])];
 
-        private BaseCard[] GetColumn(int columnNumber)
-            => [.. Enumerable.Range(0, Board.GetLength(0)).Select(x => Board[x, columnNumber])];
+        private BaseCard[] GetCardsByColumn(int column)
+            => [.. Enumerable.Range(0, Board.GetLength(0)).Select(row => Board[row, column])];
     }
 }
 
