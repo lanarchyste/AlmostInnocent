@@ -34,3 +34,4 @@
   - [ ] VALIA
 - [ ] Ajouter les modules
   - [ ] REINE
+- [ ] Ajouter les points
