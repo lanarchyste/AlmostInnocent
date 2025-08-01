@@ -1,3 +1,17 @@
+## Description
+
+Ceci est une application compagnon pour le jeu de société Almost Innocent, permettant de jouer aux différents scénarios en solo. Le jeu de base est requis ainsi qu'une connaissance des règles.
+
+Le but du jeu sera de trouver la combinaison qu'a pioché MIA (votre adversaire IA). 
+Comme dans le jeu de base, vous serez autorisé à lui poser l'une des deux questions suivantes :
+- Combien d'indices me concernent dans cette ligne/colonne ?
+- Est-ce que ma Victime/Coupable/preuve/Lieu/Crime se trouve dans cette ligne/colonne ?
+
+De même, une colonne ou une ligne ne pourra recevoir qu'un seul jeton enquête, peu importe le côté où vous posez le jeton.
+
+Une fois les jetons enquête épuisés, vous devez procéder à la résolution de votre combinaison.
+Une série de questions vous sera posée, si vous trouvez votre combinaison, vous gagnez la partie, MIA répondant toujours correctement à la résolution de sa combinaison.
+
 ## TODO
 - [ ] Ajouter les scénarios
   - [x] Scénario 1
